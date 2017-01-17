@@ -15,12 +15,21 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+<<<<<<< HEAD
 Route::get('/login', function () {
+=======
+Route::get('/login1', function () {
+>>>>>>> user interface
     return view('user.login');
 });
 
 Auth::routes();
 
+<<<<<<< HEAD
+=======
+Route::post('/delete-survey', 'User\SurveyController@delete');
+
+>>>>>>> user interface
 Route::get('/home', 'HomeController@index');
 
 Route::get('/redirect/{provider}', 'User\SocialAuthController@redirect');
@@ -35,7 +44,11 @@ Route::get('/home', 'User\SurveyController@getHome');
 
 Route::get('/create', 'User\SurveyController@createSurvey');
 
+<<<<<<< HEAD
 Route::get('/answer', 'User\SurveyController@answerSurvey');
+=======
+Route::get('/answer/{id}', 'User\SurveyController@answerSurvey');
+>>>>>>> user interface
 
 Route::post('radio-answer', 'User\SurveyController@radioAnswer');
 
@@ -57,6 +70,9 @@ Route::post('/create', [
     'as' => 'demo',
     'uses' => 'User\SurveyController@demo',
 ]);
+<<<<<<< HEAD
 
 
 Route::get('demo', 'User\MailController@sendMail');
+=======
+>>>>>>> user interface

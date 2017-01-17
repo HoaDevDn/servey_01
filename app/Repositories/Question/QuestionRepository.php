@@ -76,7 +76,10 @@ class QuestionRepository extends BaseRepository implements QuestionInterface
             }
 
             if ($this->answerRepository->multiCreate($answersAdd)) {
+<<<<<<< HEAD
                 dd($answersAdd, $questionsAdd);
+=======
+>>>>>>> user interface
                 return true;
             }
         }

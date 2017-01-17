@@ -147,4 +147,19 @@ $(document).ready(function() {
         $(".answer-other" + idAnwser).remove();
         $(".other" + idAnwser).show();
     });
+<<<<<<< HEAD
+=======
+
+    $(document).on("click", ".delete-survey", function() {
+        var idSurvey = $(this).attr("id-survey");
+        $.post(
+            url + '/delete-survey',
+            {
+                "idSurvey":  + idSurvey,
+            },
+            function(response) {
+                $(".row-tb" + idSurvey).remove();
+        });
+    });
+>>>>>>> user interface
 });

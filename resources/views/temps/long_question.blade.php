@@ -20,9 +20,8 @@
         <div class="col-md-1"></div>
         <div class="col-md-6">
             <div class="text-empty">
-            {!! Form::text("txt-question[answers][$number][][4]", '',
+                {!! Form::textarea("txt-question[answers][$number][][4]", '',
                     ['placeholder' => trans('home.enter_answer_here') ]) !!}
-                <input type="text" readonly>
             </div>
         </div>
     </div>

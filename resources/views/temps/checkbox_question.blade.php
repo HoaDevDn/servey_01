@@ -36,8 +36,7 @@
         <div class="col-md-1"></div>
         <div class="col-md-7">
             {!! Form::button(trans('home.add_option'), ['class' => 'add-checkbox', 'id-as' => $number, 'typeId' => 2]) !!}
-            {!! Form::button(trans('home.add_other'), ['class' => 'add-checkbox-other other' . '$number', 'typeId' => 3]) !!}
-        </div>
+            {!! Form::button(trans('home.add_other'), ['class' => 'add-checkbox-other other' . $number, 'typeId' => 6]) !!}
     </div>
 </div>
 

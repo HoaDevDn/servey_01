@@ -26,7 +26,9 @@ class SurveyController extends Controller
 
     public function getHome()
     {
-        return view('user.pages.home');
+        $surveys = $this->surveyRepository->get();
+
+        return view('user.pages.home', compact('surveys'));
     }
 
     public function createSurvey()
@@ -34,9 +36,19 @@ class SurveyController extends Controller
         return view('user.pages.create');
     }
 
-    public function answerSurvey()
+    public function delete()
     {
-        return view('user.pages.answer');
+        if (Request::ajax()) {
+            $idSurvey = Request::get("idSurvey");
+            $this->surveyRepository->delete($idSurvey);
+        }
+    }
+
+    public function answerSurvey($ids)
+    {
+        $surveys = $this->surveyRepository->where('id', $ids)->first();
+
+        return view('user.pages.answer', compact('surveys'));
     }
 
     public function radioAnswer()

@@ -11,22 +11,22 @@
                 <a class="glyphicon glyphicon-plus-sign">
                     <ul>
                         <li>
-                            {!! Form::button(trans('home.choices'), ['id' => 'radio-button']) !!}
+                            {!! Form::button(trans('home.choices'), ['id' => 'radio-button', 'typeId' => 1]) !!}
                         </li>
                         <li>
                             {!! Form::button(trans('home.checkboxes'), ['id' => 'checkbox-button', 'typeId' => 2]) !!}
                         </li>
                         <li>
-                            {!! Form::button(trans('home.short_answer'), ['id' => 'short-button']) !!}
+                            {!! Form::button(trans('home.short_answer'), ['id' => 'short-button', 'typeId' => 3]) !!}
                         </li>
                         <li>
-                            {!! Form::button(trans('home.passage'), ['id' => 'long-button']) !!}
+                            {!! Form::button(trans('home.passage'), ['id' => 'long-button', 'typeId' => 4]) !!}
                         </li>
                     </ul>
                 </a>
             </div>
             <div class="hide"></div>
-            {!! Form::submit('oke',['class'=>'bt-oke']) !!}
+            {!! Form::submit('Finish', ['class'=>'bt-finish']) !!}
         </div>
     {!! Form::close() !!}
 @endsection
