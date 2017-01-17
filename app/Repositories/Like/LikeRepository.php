@@ -19,7 +19,7 @@ class LikeRepository extends BaseRepository implements LikeInterface
     {
         DB::beginTransaction();
         try {
-            $this->where('user_id', $userId)->where('survey_id', $surveyId)->delete();
+            $this->where('user_id', $userId)->where('survey_id', $surveyId)->first()->delete();
             DB::commit();
 
             return true;

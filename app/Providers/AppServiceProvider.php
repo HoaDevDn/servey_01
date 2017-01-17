@@ -18,6 +18,18 @@ use App\Repositories\Invite\InviteInterface;
 use App\Repositories\Invite\InviteRepository;
 use App\Repositories\Like\LikeInterface;
 use App\Repositories\Like\LikeRepository;
+<<<<<<< HEAD
+use App\Repositories\Setting\SettingInterface;
+use App\Repositories\Setting\SettingRepository;
+use App\Repositories\Temp\TempInterface;
+use App\Repositories\Temp\TempRepository;
+=======
+use App\Repositories\Temp\TempInterface;
+use App\Repositories\Temp\TempRepository;
+use App\Repositories\Setting\SettingInterface;
+use App\Repositories\Setting\SettingRepository;
+>>>>>>> 502c1acb71f54042b858c3957071bf85add283df
+use Blade;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,7 +40,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Blade::extend(function($value, $compiler){
+            $value = preg_replace('/(\s*)@switch\((.*)\)(?=\s)/', '$1<?php switch($2):', $value);
+            $value = preg_replace('/(\s*)@endswitch(?=\s)/', '$1endswitch; ?>', $value);
+            $value = preg_replace('/(\s*)@case\((.*)\)(?=\s)/', '$1case $2: ?>', $value);
+            $value = preg_replace('/(?<=\s)@default(?=\s)/', 'default: ?>', $value);
+            $value = preg_replace('/(?<=\s)@breakswitch(?=\s)/', '<?php break;', $value);
+
+            return $value;
+        });
     }
 
     /**
@@ -45,5 +65,12 @@ class AppServiceProvider extends ServiceProvider
         App::bind(ResultInterface::class, ResultRepository::class);
         App::bind(InviteInterface::class, InviteRepository::class);
         App::bind(LikeInterface::class, LikeRepository::class);
+<<<<<<< HEAD
+        App::bind(SettingInterface::class, SettingRepository::class);
+        App::bind(TempInterface::class, TempRepository::class);
+=======
+        App::bind(TempInterface::class, TempRepository::class);
+        App::bind(SettingInterface::class, SettingRepository::class);
+>>>>>>> 502c1acb71f54042b858c3957071bf85add283df
     }
 }

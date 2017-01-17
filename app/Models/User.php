@@ -91,17 +91,22 @@ class User extends Authenticatable
 
     public function reciveSurveys()
     {
-        return $this->hasMany(Survey::class, 'reciver_id');
+        return $this->hasMany(Invite::class, 'reciver_id');
     }
 
     public function sendSurveys()
     {
-        return $this->hasMany(Survey::class, 'sender_id');
+        return $this->hasMany(Invite::class, 'sender_id');
     }
 
     public function isAdmin()
     {
         return $this->level == config('users.level.admin');
+    }
+
+    public function isSupperAdmin()
+    {
+        return $this->level == config('users.level.supperadmin');
     }
 
     public function isActive()
@@ -112,5 +117,31 @@ class User extends Authenticatable
     public function setGenderAttribute($value)
     {
         $this->attributes['gender'] = $value ?: config('users.gender.male');
+    }
+
+    public function requestAdmin()
+    {
+        return $this->hasMany(Request::class, 'admin_id');
+    }
+
+    public function requestMember()
+    {
+        return $this->hasOne(Request::class, 'member_id');
+    }
+
+<<<<<<< HEAD
+    public function getName()
+    {
+        return str_limit($this->attributes['name'], 14);
+=======
+    public function getPartNameAttribute()
+    {
+        return str_limit($this->attributes['name'], config('users.name_length_default'));
+    }
+
+    public function temps()
+    {
+        return $this->hasMany(Temp::class);
+>>>>>>> 502c1acb71f54042b858c3957071bf85add283df
     }
 }

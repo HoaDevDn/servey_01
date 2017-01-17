@@ -41,11 +41,16 @@ class LoginController extends Controller
 
     public function getLogin()
     {
-        return view('user.login');
+        if (Auth::guard()->check()) {
+            return redirect()->action('SurveyController@index');
+        }
+
+        return view('user.pages.login');
     }
 
     public function login(Request $request)
     {
+        $this->validateLogin($request);
         $data = $request->only([
             'email',
             'password',
@@ -54,16 +59,18 @@ class LoginController extends Controller
         if (Auth::attempt([
             'email' => $data['email'],
             'password' => $data['password'],
-            'status' => config('users.status.active')
+            'status' => config('users.status.active'),
         ])) {
             if (Auth::user()->level == config('users.level.admin')) {
                 return redirect()->action('Admin\DashboardController@index');
             }
 
-            return redirect()->action('HomeController@index');
+            return redirect()->intended(action('SurveyController@index'));
         }
 
-        return redirect()->action('Auth\LoginController@getLogin')->with('message', trans('auth.failed'));
+        return redirect()
+            ->action('Auth\LoginController@getLogin')
+            ->with('message', trans('auth.failed'));
     }
 
     public function logout(Request $request)
@@ -72,6 +79,6 @@ class LoginController extends Controller
         $request->session()->flush();
         $request->session()->regenerate();
 
-        return redirect()->action('Auth\LoginController@getLogin');
+        return redirect()->action('SurveyController@index');
     }
 }

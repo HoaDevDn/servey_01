@@ -12,6 +12,12 @@
 
     <!-- Styles -->
     {!! Html::style(elixir('/css/app.css')) !!}
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    {!! Html::script(elixir('/admin/js/chart.js')) !!}
+
 </head>
 <body>
     <div id="app">
@@ -44,7 +50,7 @@
                         <!-- Authentication Links -->
                         @if (Auth::guest())
                             <li><a href="{{ action('Auth\LoginController@login') }}">{{ trans('generate.login') }}</a></li>
-                            <li><a href="{{ action('Auth\RegisterController@logout') }}">{{ trans('generate.register') }}</a></li>
+                            <li><a href="{{ action('Auth\LoginController@logout') }}">{{ trans('generate.register') }}</a></li>
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -72,8 +78,5 @@
 
         @yield('content')
     </div>
-
-    <!-- Scripts -->
-    {!! Html::script(elixir('/js/app.js')) !!}
 </body>
 </html>

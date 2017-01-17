@@ -179,6 +179,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+        ConsoleTVs\Charts\ChartsServiceProvider::class,
+        Khill\Lavacharts\Laravel\LavachartsServiceProvider::class,
     ],
 
     /*
@@ -229,5 +231,6 @@ return [
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'Charts' => ConsoleTVs\Charts\Charts::class,
     ],
 ];

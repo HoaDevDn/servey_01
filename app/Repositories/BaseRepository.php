@@ -16,6 +16,11 @@ abstract class BaseRepository implements BaseInterface
         $this->model = $model->newQuery();
     }
 
+    public function newQuery($model)
+    {
+        $this->model = $model->newQuery();
+    }
+
     public function all()
     {
         return $this->model->all();
@@ -72,17 +77,7 @@ abstract class BaseRepository implements BaseInterface
 
     public function multiCreate($input)
     {
-        DB::beginTransaction();
-        try {
-            $this->model->insert($input);
-            DB::commit();
-
-            return true;
-        } catch (Exception $e) {
-            DB::rollback();
-
-            return false;
-        }
+        return $this->model->insert($input);
     }
 
     public function update($id, $input)
@@ -92,6 +87,18 @@ abstract class BaseRepository implements BaseInterface
         $model->save();
 
         return $this;
+    }
+
+    public function uploadImage($file, $path)
+    {
+        if (!$file) {
+            return null;
+        }
+
+        $fileName = uniqid(rand(), true) . '.' . $file->getClientOriginalExtension();
+        $file->move(public_path($path), $fileName);
+
+        return $fileName;
     }
 
     public function multiUpdate($column, $value, $input)

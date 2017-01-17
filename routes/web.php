@@ -10,33 +10,129 @@
 | to using a Closure or controller method. Build something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::post('/test', 'LanguageController@index');
 
 Auth::routes();
+
 Route::group(['prefix' => '/', 'middleware' => 'guest'], function () {
+
+    Route::get('/', 'Auth\LoginController@getLogin');
+
     Route::get('/register', 'Auth\RegisterController@getRegister');
+
     Route::post('/register', [
         'as' => 'register-user',
         'uses' => 'Auth\RegisterController@register',
     ]);
+
     Route::get('/login', 'Auth\LoginController@getLogin');
-    Route::post('login', [
+
+    Route::post('/login', [
         'as' => 'login-user',
         'uses' => 'Auth\LoginController@login',
     ]);
+
     Route::get('/redirect/{provider}', 'User\SocialAuthController@redirect');
+
     Route::get('/callback/{provider}', 'User\SocialAuthController@callback');
 });
-Route::get('/home', 'HomeController@index');
+
+Route::get('/', 'SurveyController@index');
+
 Route::get('/logout', 'Auth\LoginController@logout');
-Route::group(['prefix' => '/admin', 'middleware' => 'admin'], function () {
-    Route::resource('/dashboard', 'Admin\DashboardController', ['only' => ['index', 'show']]);
-    Route::resource('survey', 'Admin\SurveyController', ['only' => ['index', 'update']]);
-    Route::post('/destroy-survey', 'Admin\SurveyController@destroySurvey');
-    Route::resource('user', 'Admin\UserController', ['only' => ['index', 'update', 'show']]);
-    Route::post('/change-status-user/{status}', 'Admin\UserController@changeStatus');
-    Route::get('/search', 'Admin\UserController@search');
+
+
+Route::group(['prefix' => '/supper-admin', 'middleware' => 'supperadmin'], function () {
+
+    Route::resource('/request', 'Admin\RequestController', [
+        'only' => [
+            'index',
+        ],
+    ]);
+
+    Route::post('/request/update/{id}', 'Admin\RequestController@update');
+
+    Route::post('/request/delete', 'Admin\RequestController@destroy');
 });
+
+Route::group(['prefix' => '/admin', 'middleware' => 'admin'], function () {
+
+    Route::resource('/dashboard', 'Admin\DashboardController', [
+        'only' => ['index']
+    ]);
+
+    Route::resource('/survey', 'Admin\SurveyController', [
+        'only' => ['index', 'update']
+    ]);
+
+    Route::post('/destroy-survey', 'Admin\SurveyController@destroySurvey');
+
+    Route::resource('/user', 'Admin\UserController', [
+        'only' => ['index', 'update', 'show']
+    ]);
+
+    Route::post('/change-status-user/{status}', 'Admin\UserController@changeStatus');
+
+    Route::get('/search', 'Admin\UserController@search');
+
+    Route::resource('/request', 'Admin\RequestController', ['only' => 'store']);
+
+    Route::post('/request/cancel', 'Admin\RequestController@cancel');
+});
+
+Route::get('/', 'SurveyController@index');
+
+Route::post('/invite/send/{id}/{type}', 'SurveyController@inviteUser');
+
+Route::post('/delete-survey', 'SurveyController@delete');
+
+Route::get('explore/{token}/{type}', 'User\ExcelController@explore');
+
+Route::group(['prefix' => '/home'], function () {
+
+    Route::get('/', 'SurveyController@index');
+
+    Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
+
+        Route::post('/mark-survey', 'User\LikeController@markLike');
+
+        Route::get('/list-invited', 'SurveyController@getInviteSurvey');
+
+        Route::get('/survey-individual', 'SurveyController@listSurveyUser');
+
+        Route::get('/user/detail', 'User\UserController@show');
+
+        Route::put('/user/update', 'User\UserController@update');
+
+        Route::get('/survey-private/{token}', 'AnswerController@answerPrivate');
+
+        Route::resource('/save', 'User\SaveTempController', [
+            'only' => [
+                'store',
+                'index',
+            ]
+        ]);
+
+        Route::get('/show-temp', 'User\SaveTempController@show');
+    });
+
+});
+
+Route::get('/survey/detail/{token}', 'AnswerController@show');
+
+Route::post('/add-temp/{type}', 'TempController@addTemp');
+
+Route::post('/create', [
+    'as' => 'create',
+    'uses' => 'SurveyController@create',
+]);
+
+Route::post('/update-setting/{id}/{token}', 'SettingController@update');
+
+Route::post('/survey/result/{token}', 'ResultController@result');
+
+Route::get('/autocomplete', 'SurveyController@autocomplete');
+
+Route::post('/search', 'SurveyController@search');
+
+Route::get('/survey-public/{token}', 'AnswerController@answerPublic');

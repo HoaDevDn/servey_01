@@ -7,6 +7,8 @@ use App\Repositories\User\UserInterface;
 use Illuminate\Http\Request;
 use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Support\Facades\Input;
+use DB;
+use Exception;
 
 class UserController extends Controller
 {
@@ -26,15 +28,38 @@ class UserController extends Controller
         return view('admin.pages.users.list', compact('userActives', 'userBlocks', 'users'));
     }
 
-    public function changeStatus($status, Request $request)
+<<<<<<< HEAD
+    public function changeStatus($option, Request $request)
+=======
+    public function changeStatus(Request $request, $option, $type = null)
+>>>>>>> 502c1acb71f54042b858c3957071bf85add283df
     {
         $userIds = $request->get('checkbox-user-active') ?: $request->get('checkbox-user-block');
+        DB::beginTransaction();
+        try {
+            if ($userIds && $this->userRepository->multiUpdate('id', $userIds, ['status' => $option])) {
+                DB::commit();
 
-        if ($this->userRepository->multiUpdate('id', $userIds, ['status' => $status])) {
+<<<<<<< HEAD
+        if ($userIds && $this->userRepository->multiUpdate('id', $userIds, ['status' => $option])) {
+
             return redirect()->action('Admin\UserController@index')->with('message-success', 'admin.update.success');
+        } elseif ($this->userRepository->update($option, ['status' => config('users.status.active')])) {
+
+            return ['success' => true];
+=======
+                return redirect()->action('Admin\UserController@index')->with('message-success', 'admin.update.success');
+            } elseif ($this->userRepository->multiUpdate('id', [$option], ['status' => $type])) {
+                DB::commit();
+
+                return ['success' => true];
+            }
+        } catch (Exception $e) {
+            DB::rollback();
+>>>>>>> 502c1acb71f54042b858c3957071bf85add283df
         }
 
-        return redirect()->action('Admin\UserContorller@index')->with('message-fail', 'admin.update.fail');
+        return redirect()->action('Admin\UserController@index')->with('message-fail', 'admin.update.fail');
     }
 
     public function show($id)

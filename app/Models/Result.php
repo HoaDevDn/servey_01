@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Result extends Model
@@ -11,7 +12,17 @@ class Result extends Model
         'sender_id',
         'recevier_id',
         'content',
+        'name',
+        'email',
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+        static::creating(function ($result) {
+            $result->created_at = Carbon::now();
+        });
+    }
 
     public function answer()
     {
