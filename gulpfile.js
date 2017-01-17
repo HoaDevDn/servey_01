@@ -14,12 +14,16 @@ require('laravel-elixir-vue-2');
  */
 
 elixir(mix => {
+
     mix.sass('app.scss')
-   .webpack('app.js')
-   .scripts(['admin-script.js'], 'public/admin/js/admin-script.js')
-   .copy('resources/assets/fonts', 'public/admin/fonts')
-   .browserSync({
-        proxy: 'http://localhost:8000/',
-        proxy: 'http://survey.com/'
+        .webpack('app.js')
+        .sass(['site.scss'], 'public/user/css/site.css')
+        .sass(['admin-style-1.scss'], 'public/admin/css/admin-style-1.css')
+        .scripts(['question.js'], 'public/user/js/question.js')
+        .scripts(['admin-script.js'], 'public/admin/js/admin-script.js')
+        .copy('resources/assets/fonts', 'public/admin/fonts')
+        .browserSync( {
+            proxy: 'http://localhost:8000/',
+            proxy: 'http://survey.com/'
     });
 });

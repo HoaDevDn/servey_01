@@ -31,4 +31,9 @@ class Survey extends Model
     {
         return $this->hasMany(Like::class);
     }
+
+    public function setFeatureAttribute($value)
+    {
+        $this->attributes['feature'] = $value ?: config('settings.level.user');
+    }
 }

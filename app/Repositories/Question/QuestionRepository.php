@@ -44,4 +44,43 @@ class QuestionRepository extends BaseRepository implements QuestionInterface
             throw $e;
         }
     }
+
+    public function createMultiQuestion($survey, $questions, $answers)
+    {
+        $questionsAdd = [];
+        $answersAdd = [];
+        foreach ($questions as $value) {
+            $questionsAdd[] = [
+                'content' => $value,
+                'survey_id' => $survey,
+                'image' => 'aaaa',
+                'required' => true,
+            ];
+        }
+
+        if ($this->multiCreate($questionsAdd)) {
+            $questionIds = $this
+                ->where('survey_id', $survey)
+                ->lists('id')
+                ->toArray();
+
+            foreach (array_keys($questions) as $number => $index) {
+                foreach ($answers[$index] as $key => $value) {
+                    $type = array_keys($value)[0];
+                    $answersAdd[] = [
+                        'content' => $value[$type],
+                        'question_id' => $questionIds[$number],
+                        'type' => $type,
+                    ];
+                }
+            }
+
+            if ($this->answerRepository->multiCreate($answersAdd)) {
+                dd($answersAdd, $questionsAdd);
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
