@@ -137,7 +137,7 @@ img {
 }
 
 .div-register {
-    display: none;
+    display: block;
 }
 
 .div-login {
@@ -353,7 +353,7 @@ button.btn:hover {
 }
 
 .body-login {
-    background: url('../user/image/bg.jpg') no-repeat center center fixed;
+    background: url('/user/image/bg.jpg') no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;

@@ -24,6 +24,7 @@ elixir(mix => {
    .scripts('question.js', 'public/user/js/question.js')
    .scripts('survey.js', 'public/admin/js/survey.js')
    .scripts('admin-script.js', 'public/admin/js/admin-script.js')
+   .scripts(['question.js'], 'public/user/js/question.js')
    .copy('resources/assets/fonts', 'public/admin/fonts')
    .copy([
             'public/bower/bootstrap/dist/js/bootstrap.min.js',

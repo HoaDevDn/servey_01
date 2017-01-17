@@ -35,7 +35,16 @@
     <div class="choose-action row">
         <div class="col-md-1"></div>
         <div class="col-md-7">
-            {!! Form::button(trans('home.add_option'), ['class' => 'add-checkbox', 'id-as' => $number, 'typeId' => 2]) !!}
-            {!! Form::button(trans('home.add_other'), ['class' => 'add-checkbox-other other' . $number, 'typeId' => 6]) !!}
+            {!! Form::button(trans('home.add_option'), [
+                'class' => 'add-checkbox',
+                'id-as' => $number,
+                'typeId' => 2,
+                'url' => action('User\SurveyController@checkboxAnswer')
+                ]) !!}
+            {!! Form::button(trans('home.add_other'), [
+                'class' => 'add-checkbox-other other' . $number,
+                'url' => action('User\SurveyController@otherCheckbox'),
+                'typeId' => 6,
+                ]) !!}
     </div>
 </div>

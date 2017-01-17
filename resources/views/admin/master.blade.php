@@ -6,13 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title></title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width" />
     {!! Html::style('http://fonts.googleapis.com/css?family=Roboto:400,700,300', ['type' => 'text/css']) !!}
     {!! Html::style('http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css') !!}
     {!! Html::style(elixir('/admin/css/bootstrap.css')) !!}
     {!! Html::style(elixir('/admin/css/bootstrap.min.css')) !!}
     {!! Html::style(elixir('/css/app.css')) !!}
-
+</head>
 <body>
     <div class="wrapper">
         <div class="sidebar" data-color="blue" data-image="assets/img/sidebar-5.jpg">

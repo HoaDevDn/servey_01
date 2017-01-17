@@ -30,5 +30,9 @@ return [
     'no' => 'No',
     'submit' => 'Submit',
     'error' => 'Error',
+    'me' => 'Your Seft',
+    'table' => 'Table',
+    'update_info' => 'Update Info',
+    'redirect_admin' => 'go to admin pages',
 
 ];
