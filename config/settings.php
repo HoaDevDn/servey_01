@@ -14,10 +14,12 @@ return [
     ],
     'paginate'=> '9',
     'type_answer' => [
-        'radiobutton' => '1',
+        'radio' => '1',
         'checkbox' => '2',
-        'textfield' => '3',
-        'selectbox' => '4',
+        'short' => '3',
+        'long' => '4',
+        'otherradio' => '5',
+        'othercheckbox' => '6',
     ],
     'result' => [
         'success' => 'true',

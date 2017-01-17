@@ -35,8 +35,17 @@
     <div class="choose-action row">
         <div class="col-md-1"></div>
         <div class="col-md-7">
-            {!! Form::button(trans('home.add_option'), ['class' => 'add-radio', 'id-as' => $number, 'typeId' => 1]) !!}
-            {!! Form::button(trans('home.add_other'), ['class' => 'add-radio-other other' . $number, 'typeId' => 5]) !!}
+            {!! Form::button(trans('home.add_option'), [
+                'class' => 'add-radio',
+                'id-as' => $number,
+                'url' => action('User\SurveyController@radioAnswer'),
+                'typeId' => 1
+            ]) !!}
+            {!! Form::button(trans('home.add_other'), [
+                'class' => 'add-radio-other other' . $number,
+                'url' => action('User\SurveyController@otherRadio'),
+                'typeId' => 5
+            ]) !!}
         </div>
     </div>
 </div>
