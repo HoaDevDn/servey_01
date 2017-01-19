@@ -10,6 +10,7 @@ class Invite extends Model
         'sender_id',
         'recevier_id',
         'survey_id',
+        'token',
     ];
 
     public function sender()
@@ -25,5 +26,10 @@ class Invite extends Model
     public function survey()
     {
         return $this->belongsTo(Survey::class);
+    }
+
+    public function setTokenAttribute()
+    {
+        $this->attributes['token'] = md5(uniqid(rand(), true));
     }
 }

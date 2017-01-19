@@ -57,3 +57,6 @@ Route::post('/create', [
     'as' => 'demo',
     'uses' => 'User\SurveyController@demo',
 ]);
+
+
+Route::get('demo', 'User\MailController@sendMail');

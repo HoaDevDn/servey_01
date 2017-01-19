@@ -18,6 +18,8 @@ interface BaseInterface
 
     public function orWhere($column, $operator = null, $value = null);
 
+    public function orWhereIn($column, $operator, $value);
+
     public function create($input);
 
     public function firstOrCreate($input);

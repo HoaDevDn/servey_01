@@ -53,6 +53,13 @@ abstract class BaseRepository implements BaseInterface
         return $this;
     }
 
+    public function orWhereIn($column, $operator, $value)
+    {
+        $this->model->orWhereIn($column, $operator, $value);
+
+        return $this;
+    }
+
     public function where($conditions, $operator = null, $value = null)
     {
         $this->model->where($conditions, $operator, $value);

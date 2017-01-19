@@ -64,4 +64,16 @@ class InviteRepository extends BaseRepository implements InviteInterface
             return false;
         }
     }
+
+    public function inviteUser($sender, $recevier, $survey)
+    {
+        $token = md5(uniqid(rand(), true));
+
+        return $this->create([
+            'sender_id' => $sender,
+            'recevier_id' => $recevier,
+            'survey_id' => $survey,
+            'token' => $token,
+        ]);
+    }
 }
