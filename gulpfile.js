@@ -16,14 +16,24 @@ require('laravel-elixir-vue-2');
 elixir(mix => {
 
     mix.sass('app.scss')
-        .webpack('app.js')
-        .sass(['site.scss'], 'public/user/css/site.css')
-        .sass(['admin-style-1.scss'], 'public/admin/css/admin-style-1.css')
-        .scripts(['question.js'], 'public/user/js/question.js')
-        .scripts(['admin-script.js'], 'public/admin/js/admin-script.js')
-        .copy('resources/assets/fonts', 'public/admin/fonts')
-        .browserSync( {
-            proxy: 'http://localhost:8000/',
-            proxy: 'http://survey.com/'
+   .sass('site.scss', 'public/user/css/site.css')
+   .sass(['admin-style-1.scss'], 'public/admin/css/admin-style-1.css')
+   .webpack('app.js')
+   .scripts('chart.js', 'public/admin/js/chart.js')
+   .scripts(['question.js'], 'public/user/js/question.js')
+   .scripts('admin-script.js', 'public/admin/js/admin-script.js')
+   .copy('resources/assets/fonts', 'public/admin/fonts')
+   .copy([
+            'public/bower/bootstrap/dist/js/bootstrap.min.js',
+            'public/bower/bootstrap/dist/js/bootstrap.js',
+            'public/bower/jquery/dist/jquery.js'
+         ], 'public/admin/js')
+   .copy([
+            'public/bower/bootstrap/dist/css/bootstrap.css',
+            'public/bower/bootstrap/dist/css/bootstrap.min.css'
+         ], 'public/admin/css')
+   .browserSync({
+        proxy: 'http://localhost:8000/',
+        proxy: 'http://survey.com/'
     });
 });
