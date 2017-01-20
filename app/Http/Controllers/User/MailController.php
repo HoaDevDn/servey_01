@@ -21,6 +21,11 @@ class MailController extends Controller
         $this->userRepository = $user;
     }
 
+    public function index()
+    {
+
+    }
+
     public function sendMail()
     {
         $invite = $this->inviteRepository->inviteUser(1,2,5);

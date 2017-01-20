@@ -21,17 +21,50 @@ Route::get('/login1', function () {
 
 Auth::routes();
 
-Route::post('/delete-survey', 'User\SurveyController@delete');
+Route::group(['prefix' => '/', 'middleware' => 'guest'], function () {
+    Route::get('/register', 'Auth\RegisterController@getRegister');
+    Route::post('/register', [
+        'as' => 'register-user',
+        'uses' => 'Auth\RegisterController@register',
+    ]);
+    Route::get('/login', 'Auth\LoginController@getLogin');
+    Route::post('login', [
+        'as' => 'login-user',
+        'uses' => 'Auth\LoginController@login',
+    ]);
 
-Route::get('/home', 'HomeController@index');
+    Route::get('/redirect/{provider}', 'User\SocialAuthController@redirect');
 
-Route::get('/redirect/{provider}', 'User\SocialAuthController@redirect');
-
-Route::get('/callback/{provider}', 'User\SocialAuthController@callback');
+    Route::get('/callback/{provider}', 'User\SocialAuthController@callback');
+});
 
 Route::get('/logout', 'Auth\LoginController@logout');
 
-Route::post('/login', 'Auth\LoginController@login');
+Route::get('/home', 'HomeController@index');
+
+Route::group(['prefix' => '/admin', 'middleware' => 'admin'], function () {
+    Route::resource('/survey/', 'Admin\SurveyController', ['only' => ['index']]);
+    Route::post('/destroy-survey', 'Admin\SurveyController@destroySurvey');
+    Route::post('/survey-update-feature', 'Admin\SurveyController@updateFeature');
+    Route::post('/survey-change-feature', 'Admin\SurveyController@changeFeature');
+    // Route::get('/detail/{id}', 'Admin\UserController@userDetail');
+    Route::resource('user', 'Admin\UserController', ['only' => ['index', 'update', 'show']]);
+    Route::post('/block-user', 'Admin\UserController@blockUser');
+    Route::post('/active-user', 'Admin\UserController@activeUser');
+});
+
+Route::group(['prefix' => 'survey', 'middleware' => 'auth'], function () {
+    Route::post('/delete-survey', 'User\SurveyController@delete');
+
+// Route::get('/home', 'HomeController@index');
+
+// Route::get('/redirect/{provider}', 'User\SocialAuthController@redirect');
+
+// Route::get('/callback/{provider}', 'User\SocialAuthController@callback');
+
+// Route::get('/logout', 'Auth\LoginController@logout');
+
+// Route::post('/login', 'Auth\LoginController@login');
 
 Route::get('/home', 'User\SurveyController@getHome');
 
@@ -59,30 +92,6 @@ Route::post('/create', [
     'as' => 'demo',
     'uses' => 'User\SurveyController@demo',
 ]);
-Route::get('demo', 'User\MailController@sendMail');
-
-Auth::routes();
-
-Route::group(['prefix' => '/', 'middleware' => 'guest'], function () {
-    Route::get('/register-user', 'Auth\RegisterController@getRegister');
-
-    Route::post('/register-user', [
-        'as' => 'register-user',
-        'uses' => 'Auth\RegisterController@register',
-    ]);
-
-    Route::get('/login-user', 'Auth\LoginController@getLogin');
-
-    Route::post('login-user', [
-        'as' => 'login-user',
-        'uses' => 'Auth\LoginController@login',
-    ]);
-
-    Route::get('/redirect/{provider}', 'User\SocialAuthController@redirect');
-
-    Route::get('/callback/{provider}', 'User\SocialAuthController@callback');
+Route::post('/invite-user', 'User\MailController@sendMail');
+Route::get('/invite-user', 'User\MailController@index');
 });
-
-Route::get('/logout', 'Auth\LoginController@logout');
-
-Route::get('/home', 'HomeController@index');

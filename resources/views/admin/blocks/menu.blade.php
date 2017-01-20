@@ -28,34 +28,40 @@
                    <a href="">
                         <i class="fa fa-search"></i>
                     </a>
+
                 </li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                <li>
-                   <a href="">
-                       {{ trans('generate.account') }}
-                    </a>
-                </li>
+
                 <li class="dropdown">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            {{ trans('generate.exampe') }}
+                            {{ Auth::user()->name }}
                             <b class="caret"></b>
                       </a>
                       <ul class="dropdown-menu">
-                        <li><a href="#">{{ trans('generate.exampe') }}</a></li>
-                        <li><a href="#">{{ trans('generate.exampe') }}</a></li>
-                        <li><a href="#">{{ trans('generate.exampe') }}</a></li>
-                        <li><a href="#">{{ trans('generate.exampe') }}</a></li>
-                        <li><a href="#">{{ trans('generate.exampe') }}</a></li>
+                        <li>
+                           <a href="{{ action('Admin\UserController@show', [Auth::user()->id]) }}">
+                               {{ trans('generate.account') }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ action('User\SurveyController@getHome') }}">
+                                {{ trans('generate.home') }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ action('User\MailController@index') }}">
+                                {{ trans('generate.mail') }}
+                            </a>
+                        </li>
                         <li class="divider"></li>
-                        <li><a href="#">{{ trans('generate.exampe') }}</a></li>
+                        <li>
+                            <a href="{{ action('Auth\LoginController@logout') }}">
+                                {{ trans('generate.logout') }}
+                            </a>
+                        </li>
                       </ul>
-                </li>
-                <li>
-                    <a href="#">
-                        {{ trans('generate.logout') }}
-                    </a>
                 </li>
             </ul>
         </div>

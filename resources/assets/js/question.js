@@ -1,10 +1,5 @@
 $(document).ready(function() {
     var url = $('.url-token').data('route');
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $(".url-token").attr('idtoken')
-        }
-    });
 
     $(document).on('click', ".add-radio", function() {
         var number = parseInt($(this).attr('id-as'));

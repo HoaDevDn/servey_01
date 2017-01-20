@@ -17,10 +17,12 @@ elixir(mix => {
 
     mix.sass('app.scss')
    .sass('site.scss', 'public/user/css/site.css')
-   .sass(['admin-style-1.scss'], 'public/admin/css/admin-style-1.css')
+   .sass('home.scss', 'public/user/css/home.css')
+   .sass('admin-style-1.scss', 'public/admin/css/admin-style-1.css')
    .webpack('app.js')
    .scripts('chart.js', 'public/admin/js/chart.js')
-   .scripts(['question.js'], 'public/user/js/question.js')
+   .scripts('question.js', 'public/user/js/jsQuestion.js')
+   .scripts('survey.js', 'public/admin/js/survey.js')
    .scripts('admin-script.js', 'public/admin/js/admin-script.js')
    .copy('resources/assets/fonts', 'public/admin/fonts')
    .copy([

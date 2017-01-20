@@ -28,4 +28,6 @@ return [
         'active' => 'Acvite',
     ],
     'exampe' => 'Exampe',
+    'remove' => 'Remove',
+    'chocies' => 'Chocies',
 ];

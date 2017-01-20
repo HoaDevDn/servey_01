@@ -63,7 +63,7 @@ class User extends Authenticatable
             $userImgUrl = $this->attributes['image'];
         }
 
-        return asset(config('users.image_url' . $userImgUrl));
+        return asset(config('users.avatar_path'). '' . $userImgUrl);
     }
 
     public function setPasswordAttribute($value)
