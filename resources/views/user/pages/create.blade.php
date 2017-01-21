@@ -4,7 +4,9 @@
         <div class="content-question container">
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
-                    <input type="text" value="{{ trans('home.name_survey') }}">
+                    {!! Form::text('survey-name', 'surver name',
+                        ['placeholder' => trans('home.name_survey'), 'required' => true])
+                    !!}
                 </div>
             </div>
             <div class="add-question col-md-1">

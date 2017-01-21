@@ -3,7 +3,7 @@
     <div class="col-md-8 row">
         <div class="text-question col-md-10">
             {!! Form::text("txt-question[question][$number]", '',
-                ['placeholder' => trans('home.enter_question_here') ])
+                ['placeholder' => trans('home.enter_question_here'), 'required' => true])
             !!}
         </div>
         <div class="col-md-2 row">
@@ -15,13 +15,13 @@
             </div>
         </div>
     </div>
-    <div class="clear clear-as{{ $number }}1"></div>
+    <div class="clear clear-as{{ $number }}0"></div>
     <div class="div-content-answer qs-as{{ $number }}0" >
         <div class="col-md-1"></div>
         <div class="col-md-6">
             <div class="div-text-answer">
                 {!! Form::text("txt-question[answers][$number][][2]", '',
-                    ['placeholder' => trans('home.enter_answer_here') ]) !!}
+                    ['placeholder' => trans('home.enter_answer_here'), 'required' => true]) !!}
             </div>
             <div class="div-radio">
                 {!! Form::checkbox('', '', '', ['disabled' => true]) !!}

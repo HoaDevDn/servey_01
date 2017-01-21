@@ -3,7 +3,7 @@
     <div class="col-md-1"></div>
     <div class="col-md-6">
         <div class="div-text-answer">
-            {!! Form::text("txt-question[answers][$number][][6]", '', ['readonly' => 'true']) !!}
+            {!! Form::text("txt-question[answers][$number][][6]", '', ['readonly' => 'true', 'required' => true ]) !!}
         </div>
         <div class="other div-radio">
             {!! Form::checkbox('', '', '', ['disabled' => 'true']) !!}

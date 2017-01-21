@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\User;
 
-use Request;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\Survey\SurveyInterface;
 use App\Repositories\Question\QuestionInterface;
 use App\Repositories\Answer\AnswerInterface;
+use Auth;
 
 class SurveyController extends Controller
 {
@@ -26,8 +27,10 @@ class SurveyController extends Controller
 
     public function getHome()
     {
-        $surveys = $this->surveyRepository->get();
 
+        $surveys = $this->surveyRepository
+            ->where('user_id', Auth::user()->id)
+            ->orWhere('feature', 0)->orderBy('id', 'desc')->paginate(2);
         return view('user.pages.home', compact('surveys'));
     }
 
@@ -36,12 +39,20 @@ class SurveyController extends Controller
         return view('user.pages.create');
     }
 
-    public function delete()
+    public function delete(Request $request)
     {
-        if (Request::ajax()) {
-            $idSurvey = Request::get("idSurvey");
+        if ($request->ajax()) {
+            $idSurvey = $request->get("idSurvey");
             $this->surveyRepository->delete($idSurvey);
+
+            return [
+                'success' => true,
+            ];
         }
+
+        return [
+            'success' => false,
+        ];
     }
 
     public function answerSurvey($ids)
@@ -51,90 +62,150 @@ class SurveyController extends Controller
         return view('user.pages.answer', compact('surveys'));
     }
 
-    public function radioAnswer()
+    public function radioAnswer(Request $request)
     {
-        if (Request::ajax()) {
-            $number = Request::get("number");
-            $num_as = Request::get("num_as");
+        if ($request->ajax()) {
+            $number = $request->get("number");
+            $num_as = $request->get("num_as");
 
-            return view('temps.text_radio', compact("num_as", "number"))->render();
+            return [
+                'success' => true,
+                'data' => view('temps.text_radio', compact("num_as", "number"))->render(),
+            ];
         }
+
+        return [
+            'success' => false,
+        ];
     }
 
-    public function otherRadio()
+    public function otherRadio(Request $request)
     {
-        if (Request::ajax()) {
-            $number = Request::get("number");
+        if ($request->ajax()) {
+            $number = $request->get("number");
 
-            return view('temps.text_other_radio', compact("number"))->render();
+            return [
+                'success' => true,
+                'data' => view('temps.text_other_radio', compact("number"))->render(),
+            ];
         }
+
+        return [
+            'success' => false,
+        ];
     }
 
-    public function checkboxAnswer()
+    public function checkboxAnswer(Request $request)
     {
-        if (Request::ajax()) {
-            $number = Request::get("number");
-            $num_as = Request::get("num_as");
-            $type = Request::get("type");
+        if ($request->ajax()) {
+            $number = $request->get("number");
+            $num_as = $request->get("num_as");
+            $type = $request->get("type");
 
-            return view('temps.text_checkbox', compact("num_as", "number", "type"))->render();
+            return [
+                'success' => true,
+                'data' => view('temps.text_checkbox', compact("num_as", "number", "type"))->render(),
+            ];
         }
+
+        return [
+            'success' => false,
+        ];
     }
 
-    public function otherCheckbox()
+    public function otherCheckbox(Request $request)
     {
-        if (Request::ajax()) {
-            $number = Request::get("number");
+        if ($request->ajax()) {
+            $number = $request->get("number");
 
-            return view('temps.text_other_checkbox', compact("number"))->render();
+            return [
+                'success' => true,
+                'data' => view('temps.text_other_checkbox', compact("number"))->render(),
+            ];
         }
+
+        return [
+            'success' => false,
+        ];
     }
 
-    public function radioQuestion()
+    public function radioQuestion(Request $request)
     {
-        if (Request::ajax()) {
-            $number = Request::get('number');
+        if ($request->ajax()) {
+            $number = $request->get('number');
 
-            return view('temps.radio_question', compact('number'))->render();
+            return [
+                'success' => true,
+                'data' => view('temps.radio_question', compact('number'))->render(),
+            ];
         }
+
+        return [
+            'success' => false,
+        ];
     }
 
-    public function checkboxQuestion()
+    public function checkboxQuestion(Request $request)
     {
-        if (Request::ajax()) {
-            $number = Request::get('number');
+        if ($request->ajax()) {
+            $number = $request->get('number');
 
-            return view('temps.checkbox_question', compact('number'))->render();
+            return [
+                'success' => true,
+                'data' => view('temps.checkbox_question', compact('number'))->render(),
+            ];
         }
+
+        return [
+            'success' => false,
+        ];
     }
 
-    public function shortQuestion()
+    public function shortQuestion(Request $request)
     {
-        if (Request::ajax()) {
-            $number = Request::get('number');
+        if ($request->ajax()) {
+            $number = $request->get('number');
 
-            return view('temps.short_question', compact('number'))->render();
+            return [
+                'success' => true,
+                'data' => view('temps.short_question', compact('number'))->render(),
+            ];
         }
+
+        return [
+            'success' => false,
+        ];
     }
 
-    public function longQuestion()
+    public function longQuestion(Request $request)
     {
-        if (Request::ajax()) {
-            $number = Request::get('number');
+        if ($request->ajax()) {
+            $number = $request->get('number');
 
-            return view('temps.long_question', compact('number'))->render();
+            return [
+                'success' => true,
+                'data' => view('temps.long_question', compact('number'))->render(),
+            ];
         }
+
+        return [
+            'success' => false,
+        ];
     }
 
-    public function demo()
+    public function create(Request $request)
     {
+        $value = $request->get('survey-name');
+        if ($value == "") {
+            $value == config('survey.title_default');
+        }
         $survey = $this->surveyRepository
             ->create([
-                'user_id' => 1,
-                'title' => 'abc',
-                'feature' => 0
+                'user_id' => Auth::user()->id,
+                'title' => $value,
+                'feature' => config('settings.survey.not_feature'),
             ]);
-        $txt_question = Request::get('txt-question');
+        $txt_question = $request->get('txt-question');
         $questions = $txt_question['question'];
         $answers =  $txt_question['answers'];
 
@@ -142,6 +213,15 @@ class SurveyController extends Controller
             $this->questionRepository->createMultiQuestion($survey, $questions, $answers);
         }
 
-        return redirect('/home');
+        return redirect()->action('User\SurveyController@getHome');
+    }
+
+    public function result(Request $request)
+    {
+        $checks = $request->get('check');
+        $texts = $request->get('txt-answer');
+        $this->resultRepository->createMultiQuestion($checks, $texts);
+
+        return $request;
     }
 }

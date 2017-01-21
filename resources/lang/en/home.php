@@ -21,5 +21,14 @@ return [
     'search' => 'Search',
     'setting' => 'setting',
     'enter_question_here' => 'Enter question here',
+    'create_survey' => 'Create Survey',
+    'survey' => 'Survey',
+    'remove' => 'Remove',
+    'owned_by' => 'Owned by',
+    'survey' => 'Survey',
+    'date' => 'Date',
+    'no' => 'No',
+    'submit' => 'Submit',
+    'error' => 'Error',
 
 ];

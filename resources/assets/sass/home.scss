@@ -255,6 +255,11 @@
     >textarea {
         margin-left: 2%;
         border: 0px;
+        font-size: 20px;
+        resize: none;
+        height: 80px;
+        width: 106%;
+        padding: 7px 12px;
     }
 
 }
@@ -275,6 +280,34 @@
 
 .dropdown-menu {
     margin-right: -80px;
+}
+
+.drop-1  {
+    &:hover{
+        .drop-1.dropdown-menu {
+            display: block;
+        }
+    }
+}
+
+.btn.btn-default{
+    height: 40px;
+}
+
+.form-control.search-form.fr {
+    width: 400px;
+}
+
+.navbar-inverse {
+    background:transparent;
+}
+
+.drop-2  {
+    &:hover{
+        .drop-2.dropdown-menu {
+            display: block;
+        }
+    }
 }
 
 .info-as {
@@ -392,5 +425,74 @@
     &:hover {
         background: #1ee4e8;
         color: white;
+    }
+}
+
+.table.table-striped {
+    text-align: center;
+
+    th {
+        &:nth-child(1) {
+        width: 3%;text-align: center;
+        }
+        &:nth-child(2) {
+            text-align: center;
+        }
+        &:nth-child(3) {
+            width: 20%;text-align: center;
+        }
+        &:nth-child(4) {
+            width: 15%;text-align: center;
+        }
+        &:nth-child(5) {
+            width: 12%;text-align: center;
+        }
+    }
+    tr {
+        border-bottom: 1px solid white;
+        &:nth-child(even) {
+            background: white;
+            color: black;
+            a {
+                color: black;
+                cursor: pointer;
+            }
+            &:hover {
+                background: #a3ccf7;
+            }
+        }
+        &:nth-child(odd) {
+            background: transparent;
+            color: white;
+            a {
+                color: white;
+                cursor: pointer;
+            }
+            &:hover {
+                background: #5e6368;
+            }
+        }
+    }
+}
+
+.list.container {
+    background: url('/user/image/bg-sv.png');
+    color: white;
+}
+
+.div-submit {
+    text-align: center;
+    >input[type='submit'] {
+        border: 1px solid white;
+        padding: 8px 15px;
+        background: transparent;
+        color: white;
+        font-weight:bold;
+        font-size: 18px;
+        border-radius: 5px;
+        &:hover {
+            background: gray;
+            color: white;
+        }
     }
 }

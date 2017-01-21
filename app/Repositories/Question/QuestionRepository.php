@@ -50,10 +50,13 @@ class QuestionRepository extends BaseRepository implements QuestionInterface
         $questionsAdd = [];
         $answersAdd = [];
         foreach ($questions as $value) {
+            if ($value == "") {
+                $value = config('survey.question_default');
+            }
             $questionsAdd[] = [
                 'content' => $value,
                 'survey_id' => $survey,
-                'image' => 'aaaa',
+                'image' => config('survey.image_default'),
                 'required' => true,
             ];
         }
@@ -67,8 +70,13 @@ class QuestionRepository extends BaseRepository implements QuestionInterface
             foreach (array_keys($questions) as $number => $index) {
                 foreach ($answers[$index] as $key => $value) {
                     $type = array_keys($value)[0];
+                    $temp = $value[$type];
+
+                    if ($temp  == "") {
+                        $temp  = config('survey.question_default');
+                    }
                     $answersAdd[] = [
-                        'content' => $value[$type],
+                        'content' => $temp,
                         'question_id' => $questionIds[$number],
                         'type' => $type,
                     ];
