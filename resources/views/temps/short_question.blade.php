@@ -3,7 +3,7 @@
     <div class="col-md-8 row">
         <div class="text-question col-md-10">
             {!! Form::text("txt-question[question][$number]", '',
-                ['placeholder' => trans('home.enter_question_here') ])
+                ['placeholder' => trans('home.enter_question_here'), 'required' => true ])
             !!}
         </div>
         <div class="col-md-2 row">
@@ -21,7 +21,7 @@
         <div class="col-md-6">
             <div class="text-empty">
                 {!! Form::text("txt-question[answers][$number][][3]", '',
-                    ['placeholder' => trans('home.enter_answer_here') ]) !!}
+                    ['placeholder' => trans('home.enter_answer_here'),'readonly' => true]) !!}
             </div>
         </div>
     </div>

@@ -6,7 +6,7 @@ $(document).ready(function() {
         var type = $(this).attr("typeId");
         var num_as = (parseInt($(".question" + number).attr('temp-qs')) + 1);
         $.post(
-            url + '/radio-answer',
+            url + '/survey/radio-answer',
             {
                 "number": number,
                 "num_as": num_as,
@@ -22,7 +22,7 @@ $(document).ready(function() {
         var number = parseInt($(this).parent().find(".add-radio").attr('id-as'));
         var type = $(this).attr("typeId");
         $.post(
-            url + '/other-radio',
+            url + '/survey/other-radio',
             {
                 "number": number,
                 "type": type,
@@ -38,7 +38,7 @@ $(document).ready(function() {
         var type = $(this).attr("typeId");
         var num_as = (parseInt($(".question" + number).attr('temp-qs')) + 1);
         $.post(
-            url + '/checkbox-answer',
+            url + '/survey/checkbox-answer',
             {
                 "number": number,
                 "num_as": num_as,
@@ -54,7 +54,7 @@ $(document).ready(function() {
         var number = parseInt($(this).parent().find(".add-checkbox").attr('id-as'));
         var type = $(this).attr("typeId");
         $.post(
-            url + '/other-checkbox',
+            url + '/survey/other-checkbox',
             {
                 "number": number,
                 "type": type,
@@ -69,7 +69,7 @@ $(document).ready(function() {
         var number = parseInt($('.url-token').attr("data-number")) + 1;
         var type = $(this).attr("typeId");
         $.post(
-            url + '/radio-question',
+            url + '/survey/radio-question',
             {
                 "number": number,
                 "type": type,
@@ -84,7 +84,7 @@ $(document).ready(function() {
         var number = parseInt($('.url-token').attr("data-number")) + 1;
         var type = $(this).attr("typeId");
         $.post(
-            url + '/checkbox-question',
+            url + '/survey/checkbox-question',
             {
                 "number": number,
                 "type": type,
@@ -99,7 +99,7 @@ $(document).ready(function() {
         var number = parseInt($('.url-token').attr("data-number")) + 1;
         var type = $(this).attr("typeId");
         $.post(
-            url + '/short-question',
+            url + '/survey/short-question',
             {
                 "number": number,
                 "type": type,
@@ -114,7 +114,7 @@ $(document).ready(function() {
         var number = parseInt($('.url-token').attr("data-number")) + 1;
         var type = $(this).attr("typeId");
         $.post(
-            url + '/long-question',
+            url + '/survey/long-question',
             {
                 "number": number,
                 "type": type,
@@ -142,13 +142,11 @@ $(document).ready(function() {
         $(".answer-other" + idAnwser).remove();
         $(".other" + idAnwser).show();
     });
-<<<<<<< HEAD
-=======
 
     $(document).on("click", ".delete-survey", function() {
         var idSurvey = $(this).attr("id-survey");
         $.post(
-            url + '/delete-survey',
+            url + '/survey/delete-survey',
             {
                 "idSurvey":  + idSurvey,
             },
@@ -156,5 +154,4 @@ $(document).ready(function() {
                 $(".row-tb" + idSurvey).remove();
         });
     });
->>>>>>> user interface
 });

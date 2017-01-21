@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\Survey\SurveyInterface;
 use App\Repositories\Question\QuestionInterface;
 use App\Repositories\Answer\AnswerInterface;
+use Auth;
 
 class SurveyController extends Controller
 {
@@ -26,7 +27,9 @@ class SurveyController extends Controller
 
     public function getHome()
     {
-        $surveys = $this->surveyRepository->get();
+        $surveys = $this->surveyRepository
+            ->where('user_id', Auth::user()->id)
+            ->orWhere('feature', 1)->orderBy('id', 'desc')->paginate(10);
 
         return view('user.pages.home', compact('surveys'));
     }

@@ -13,10 +13,17 @@
                             {{ $survey->title }}
                         </a>
                     </div>
-                    <div class="col-md-2">
-                        <span class="glyphicon glyphicon-user"></span>
-                        me
-                    </div>
+                    @if ($survey->feature == 1 && $survey->user_id != Auth::user()->id)
+                        <div class="col-md-2">
+                            <span class="glyphicon glyphicon-user"></span>
+                            {{ $survey->user->name }}
+                        </div>
+                    @else
+                        <div class="col-md-2">
+                            <span class="glyphicon glyphicon-user"></span>
+                            me
+                        </div>
+                    @endif
                     <div class="col-md-2">
                         <span class="glyphicon glyphicon-calendar"></span>
                         12/11/2017
@@ -33,5 +40,6 @@
             @endforelse
             <input type="hidden" name="" class="input-hide">
         </div>
+        {{ $surveys->render() }}
     </div>
 @endsection
