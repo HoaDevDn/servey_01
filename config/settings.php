@@ -1,7 +1,5 @@
 <?php
-
 return [
-
     'image_default' => 'questionDefault.png',
     'image_path' => 'image/',
     'survey' => [
@@ -23,5 +21,4 @@ return [
         'success' => 'true',
         'fail' => 'false',
     ],
-
 ];
