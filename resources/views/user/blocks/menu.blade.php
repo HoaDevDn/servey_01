@@ -1,62 +1,32 @@
-<div class="option-top container">
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand">{{ trans('home.get_survey') }}</a>
-            </div>
-            <ul class="nav navbar-nav">
-                <li>
-                    <a href="{{ action('User\SurveyController@createSurvey') }}">
-                        {{ trans('home.home') }}
-                    </a>
-                </li>
-                <li>
-                    {!! Form::open(['class' => 'navbar-form navbar-left']) !!}
-                        <div class="input-group">
-                            {!! Form::text('text-search', '',
-                                ['class' => 'form-control search-form fr', 'placeholder' => trans('home.search') . '...' ]) !!}
-                            <div class="input-group-btn">
-                                {{ Form::button('<i class="glyphicon glyphicon-search"></i>', ['type' => 'submit', 'class' => 'btn btn-default']) }}
-                            </div>
-                        </div>
-                    {!! Form::close() !!}
-                </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a href="{{ action('User\SurveyController@createSurvey') }}" >
-                        <span class="glyphicon glyphicon-plus"></span>
-                        {{ trans('home.create_survey') }}
-                    </a>
-                </li>
-                <li class="drop-1 dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown">
-                        <span class="glyphicon glyphicon-gift"></span>
-                        {{ trans('home.notices') }}
-                    </a>
-                    <ul class="drop-1 dropdown-menu">
-                        <li><a href="#">{{ trans('home.pages') }}</a></li>
-                    </ul>
-                </li>
-                <li class="drop-2 dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown">
-                        <span class="glyphicon glyphicon-user"></span>
-                        {{ Auth::user()->name }}
-                    </a>
-                    <ul class="drop-2 dropdown-menu">
-                        <li><a href="#">{{ trans('home.update_info') }}</a></li>
-                        @if (Auth::user()->level == config('users.level.admin'))
-                            <li><a href="{{ action('Admin\DashboardController@index') }}"> {{ trans('home.redirect_admin') }} </a></li>
-                        @endif
-                    </ul>
-                </li>
-                <li>
-                    <a href="{{ action('Auth\LoginController@logout') }}">
-                        <span class="glyphicon glyphicon-log-out"></span>
-                        {{ trans('home.logout') }}
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-</div>
+<nav id="menu">
+    <h2>{{ trans('home.menu') }}</h2>
+    <ul>
+        @if (Auth::check())
+            <li>
+                {!! Html::image(Auth::user()->image) !!}
+                <span>
+                    {{ Auth::user()->name }}
+                </span>
+            </li>
+        @endif
+        <li>
+            <a href="{{ action('User\SurveyController@getHome') }}">
+                {{ trans('home.home') }}
+            </a>
+        </li>
+        <li><a href="">{{ trans('home.profile') }}</a></li>
+        <li>
+            <a href="{{ action('User\SurveyController@create') }}">
+                {{ trans('home.create_survey') }}
+            </a>
+        </li>
+        <li><a href="">{{ trans('home.update_info') }}</a></li>
+        <li><a href="">{{ trans('home.history') }}</a></li>
+        <li><a href="{{ (Auth::check()) ?
+                action('Auth\LoginController@logout') : action('Auth\LoginController@login')
+            }}">
+               {{ (Auth::check()) ? trans('home.logout') : trans('home.login') }}
+            </a>
+        </li>
+    </ul>
+</nav>

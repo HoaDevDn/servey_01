@@ -41,11 +41,12 @@ class LoginController extends Controller
 
     public function getLogin()
     {
-        return view('user.login');
+        return view('user.blocks.register');
     }
 
     public function login(Request $request)
     {
+        $this->validateLogin($request);
         $data = $request->only([
             'email',
             'password',
@@ -60,7 +61,7 @@ class LoginController extends Controller
                 return redirect()->action('Admin\DashboardController@index');
             }
 
-            return redirect()->action('HomeController@index');
+            return redirect()->action('User\SurveyController@getHome');
         }
 
         return redirect()->action('Auth\LoginController@getLogin')->with('message', trans('auth.failed'));
@@ -72,6 +73,6 @@ class LoginController extends Controller
         $request->session()->flush();
         $request->session()->regenerate();
 
-        return redirect()->action('Auth\LoginController@getLogin');
+        return redirect()->action('User\SurveyController@getHome');
     }
 }

@@ -1,11 +1,11 @@
 $(document).ready(function() {
-    var url = $('.url-token').data('route');
     var error = $('.url-token').attr('ms-error');
 
     function addAnwser($this) {
         var url = $this.attr('url');
-        var number = parseInt($($this).attr('id-as'));
         var type = $this.attr("typeId");
+        var number = parseInt($($this).attr('id-as'));
+        var trash = parseInt($(".question" + number).attr('trash'));
         var num_as = (parseInt($(".question" + number).attr('temp-qs')) + 1);
         $.post(
             url,
@@ -19,6 +19,7 @@ $(document).ready(function() {
                 if (response.success) {
                     $(".temp-other" + number +":first").before(response.data);
                     $(".question" + number).attr("temp-qs", num_as);
+                    $(".question" + number).attr("trash", trash + 1);
                 } else {
                     alert(error);
                 }
@@ -26,8 +27,8 @@ $(document).ready(function() {
     }
 
     function addOtherButton($this, class_temp) {
-        var number = parseInt($this.parent().find(class_temp).attr('id-as'));
-        var type = $this.attr("typeId");
+        var number = parseInt($this.parent().parent().find(class_temp).attr('id-as'));
+        var type = $this.attr('typeId');
         var url = $this.attr('url');
         $.post(
             url,
@@ -47,8 +48,8 @@ $(document).ready(function() {
     }
 
     function addQuestion($this) {
-        var number = parseInt($('.url-token').attr("data-number")) + 1;
-        var type = $this.attr("typeId");
+        var number = parseInt($('.url-token').attr('data-number')) + 1;
+        var type = $this.attr('typeId');
         var url = $this.attr('url');
         $.post(
             url,
@@ -107,9 +108,15 @@ $(document).ready(function() {
     });
 
     $(document).on("click", ".glyphicon-remove", function() {
+        var number = parseInt($(this).attr('num'));
+        var trash = parseInt($(".question" + number).attr('trash'));
         var idAnwser = $(this).attr("id-as");
-        $(".clear-as" + idAnwser).remove();
-        $(".qs-as" + idAnwser).remove();
+
+        if (trash > 2) {
+            $(".question" + number).attr("trash", trash - 1);
+            $(".clear-as" + idAnwser).remove();
+            $(".qs-as" + idAnwser).remove();
+        }
     });
 
     $(document).on("click", ".remove-other", function() {
@@ -119,10 +126,11 @@ $(document).ready(function() {
         $(".other" + idAnwser).show();
     });
 
-    $(document).on("click", ".delete-survey", function() {
+    $(document).on("change", ".delete-survey", function() {
+        var url = $this.attr('url');
         var idSurvey = $(this).attr("id-survey");
         $.post(
-            url + '/survey/delete-survey',
+            url,
             {
                 "idSurvey":  + idSurvey,
             },
@@ -134,5 +142,39 @@ $(document).ready(function() {
                     alert(error);
                 }
         });
+    });
+
+    $(document).on("click", ".bt-action", function() {
+        var url = $(this).attr('url');
+        window.location = url;
+    });
+
+    $(document).on("click", ".option-add", function() {
+        var url = $(this).attr('url');
+        var temp_as = $(this).attr('temp-as');
+        var temp_qs = $(this).attr('temp-qs');
+
+        if ($(this).prop('checked')) {
+            $.post(
+                url,
+                {
+                    "idQuestion": temp_qs,
+                    "idAnswer": temp_as,
+                },
+                function(response) {
+                    if (response.success) {
+                        $('.append-as' + temp_qs).html(response.data);
+                    } else {
+                        alert(error);
+                    }
+            });
+        } else {
+            $('.input' + temp_qs).remove();
+        }
+    });
+
+    $(document).on("click", ".option-choose", function() {
+        var temp_qs = $(this).attr('temp-qs');
+        $('.input' + temp_qs).remove();
     });
 });

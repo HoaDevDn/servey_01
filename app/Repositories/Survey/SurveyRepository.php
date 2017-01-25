@@ -46,4 +46,36 @@ class SurveyRepository extends BaseRepository implements SurveyInterface
             return false;
         }
     }
+
+    public function resultSurvey($surveyId)
+    {
+        $survey = $this->find($surveyId);
+        $datasInput = $this->inviteRepository->getResult($surveyId);
+        $questions = $datasInput['questions'];
+        $temp = [];
+        $results = [];
+
+        foreach ($questions as $key => $question) {
+            $answers = $datasInput['answers']->where('question_id', $question->id)->pluck('id')->toArray();
+            $temp[] = [
+                'answers' => $answers,
+                'question_id' => $question->id,
+            ];
+        }
+
+        foreach ($temp as $array) {
+            foreach ($array['answers'] as $key => $value) {
+                $answerResult = $datasInput['results']->whereIn('answer_id', $value)->pluck('id')->toArray();
+                $total = $datasInput['results']->whereIn('answer_id', $array['answers'])->pluck('id')->toArray();
+                $results[] = [
+                    'content_id' => $value,
+                    'question_id' => $array['question_id'],
+                    'percent' => (double)(count($answerResult)*100)/(count($total)),
+                ];
+            }
+        }
+
+        // return $results;
+        dd($results);
+    }
 }

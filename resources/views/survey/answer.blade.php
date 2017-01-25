@@ -3,59 +3,90 @@
     <div class="content-question container">
         <div class="title-survey">
             <h1>{{ $surveys->title }}</h1>
-            <?php Session::put('survey', $surveys) ?>
         </div>
-        {{ Form::open(['action' => 'User\ResultController@result']) }}
+        {{ Form::open(['action' => ['User\ResultController@result', $surveys->id]]) }}
             @foreach($surveys->questions as $key => $question)
                 <div class="row-container-answer">
                     <div>
-                        <h2>{{ ++$key }}. {{ $question->content }}</h2>
+                        <p class="qs-content">
+                            {{ ++$key }}. {{ $question->content }}
+                        </p>
                     </div>
                     <div class="put-answer">
-                        @foreach($question->answers as $answer)
-                            @if ($answer->type == 1)
-                                <div>
-                                    {{ Form::radio("answer[$question->id]", $answer->id) }}
-                                    <span>{{ $answer->content }}</span>
-                                </div>
-                            @elseif ($answer->type == 2)
-                                <div>
-                                    {{ Form::checkbox("answer[$question->id][]", $answer->id) }}
-                                    <span>{{ $answer->content }}</span>
-                                </div>
-                            @elseif ($answer->type == 3)
-                                <div class="put-answer">
-                                    {!! Form::text("answer[$question->id]", '', ['class' => 'short-text', 'required' => true]) !!}
-                                </div>
-                            @elseif ($answer->type == 4)
-                                <div class="put-answer">
-                                    {!! Form::textarea("answer[$question->id]", '', ['class' => 'long-text', 'required' => true]) !!}
-                                </div>
-                            @elseif ($answer->type == 5)
-                                <div class="container-other row">
-                                    <div style="display: none;">
-                                        <!-- {{ Form::radio("answer[$question->id]", '') }} -->
+                         @foreach($question->answers as $temp => $answer)
+                            @switch($answer->type)
+                                @case(config('survey.type_radio'))
+                                    <div class="12u$(small) ct-option">
+                                        {{ Form::radio("answer[$question->id]", $answer->id, '', [
+                                            'id' => "$key-$temp",
+                                            'class' => 'option-choose',
+                                            'temp-as' => $answer->id,
+                                            'temp-qs' => $question->id
+                                        ]) }}
+                                        <label for="{{ $key }}-{{ $temp }}">
+                                            {{ $answer->content }}
+                                        </label>
                                     </div>
-                                    <div>
-                                        <div>
-                                            {!! Form::text("answer[$question->id][$answer->id]",'', ['class' => 'input-radio', 'required' => true]) !!}
+                                    @breakswitch
+                                @case(config('survey.type_checkbox'))
+                                    <div class="12u$(small) ct-option">
+                                        {{ Form::checkbox("answer[$question->id][$answer->id]", $answer->id, '', [
+                                            'id' => "$key-$temp",
+                                        ]) }}
+                                        <label for="{{ $key }}-{{ $temp }}">
+                                            {{ $answer->content }}
+                                        </label>
+                                    </div>
+                                    @breakswitch
+                                @case(config('survey.type_short'))
+                                    <div class="put-answer">
+                                        {!! Form::text("answer[$question->id][$answer->id]", '', ['class' => 'short-text', 'required' => true]) !!}
+                                    </div>
+                                    @breakswitch
+                                @case(config('survey.type_long'))
+                                    <div class="put-answer">
+                                        {!! Form::textarea("answer[$question->id][$answer->id]", '', ['class' => 'long-text', 'required' => true]) !!}
+                                    </div>
+                                    @breakswitch
+                                @case(config('survey.type_other_radio'))
+                                    <div class="container-other row" style="margin-left: -53px;">
+                                        <div class="col-md-2">
+                                            <div class="12u$(small) ct-option">
+                                                {{ Form::radio("answer[$question->id]", $answer->id, '', [
+                                                    'id' => "$key-$temp",
+                                                    'class' => 'option-add',
+                                                    'temp-as' => $answer->id,
+                                                    'temp-qs' => $question->id,
+                                                    'url' => action('User\SurveyController@textOther'),
+                                                ]) }}
+                                                <label for="{{ $key }}-{{ $temp }}">
+                                                    {{ trans('home.other') }}
+                                                </label>
+                                            </div>
                                         </div>
-                                        <div><span>{{ trans('home.other') }}</span></div>
+                                        <div class="col-md-5 append-as{{ $question->id }}"></div>
                                     </div>
-                                </div>
-                            @else
-                                <div class="container-other row">
-                                    <div>
-                                       <!--  {{ Form::checkbox("answer[$question->id][]", $answer->id) }} -->
-                                    </div>
-                                    <div>
-                                        <div>
-                                            {!! Form::text("answer[$question->id][$answer->id]", '', ['class' => 'input-checkbox']) !!}
+                                    @breakswitch
+                                @case(config('survey.type_other_checkbox'))
+                                    <div class="container-other row" style="margin-left: -53px;">
+                                        <div class="col-md-2">
+                                            <div class="12u$(small) ct-option">
+                                                {{ Form::checkbox("answer[$question->id]", $answer->id, '', [
+                                                    'id' => "$key-$temp",
+                                                    'class' => 'option-add',
+                                                    'temp-as' => $answer->id,
+                                                    'temp-qs' => $question->id,
+                                                    'url' => action('User\SurveyController@textOther'),
+                                                ]) }}
+                                                <label for="{{ $key }}-{{ $temp }}">
+                                                    {{ trans('home.other') }}
+                                                </label>
+                                            </div>
                                         </div>
-                                        <div><span>{{ trans('home.other') }}</span></div>
+                                        <div class="col-md-5 append-as{{ $question->id }}"></div>
                                     </div>
-                                </div>
-                            @endif
+                                    @breakswitch
+                            @endswitch
                         @endforeach
                     </div>
                 </div>

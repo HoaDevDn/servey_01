@@ -27,14 +27,32 @@ class SurveyController extends Controller
 
     public function getHome()
     {
-
         $surveys = $this->surveyRepository
-            ->where('user_id', Auth::user()->id)
-            ->orWhere('feature', config('settings.survey.not_feature'))
+            ->where('feature', config('settings.survey.feature'))
             ->orderBy('id', 'desc')
             ->paginate(config('settings.paginate'));
 
-        return view('user.pages.home', compact('surveys'));
+        return view('user.pages.home-user', compact('surveys'));
+    }
+
+    public function register()
+    {
+        $surveys = $this->surveyRepository
+            ->where('feature', config('settings.survey.feature'))
+            ->orderBy('id', 'desc')
+            ->paginate(config('settings.paginate'));
+
+        return view('user.pages.register', compact('surveys'));
+    }
+
+    public function listSurveyUser()
+    {
+        $surveys = $this->surveyRepository
+            ->where('user_id', Auth::user()->id)
+            ->orderBy('id', 'desc')
+            ->paginate(config('settings.paginate'));
+
+        return view('user.pages.home-user', compact('surveys'));
     }
 
     public function createSurvey()
@@ -45,7 +63,7 @@ class SurveyController extends Controller
     public function delete(Request $request)
     {
         if ($request->ajax()) {
-            $idSurvey = $request->get("idSurvey");
+            $idSurvey = $request->get('idSurvey');
             $this->surveyRepository->delete($idSurvey);
 
             return [
@@ -58,9 +76,9 @@ class SurveyController extends Controller
         ];
     }
 
-    public function answerSurvey($ids)
+    public function answerSurvey($id)
     {
-        $surveys = $this->surveyRepository->where('id', $ids)->first();
+        $surveys = $this->surveyRepository->where('id', $id)->first();
 
         return view('survey.answer', compact('surveys'));
     }
@@ -84,11 +102,11 @@ class SurveyController extends Controller
     public function otherRadio(Request $request)
     {
         if ($request->ajax()) {
-            $number = $request->get("number");
+            $number = $request->get('number');
 
             return [
                 'success' => true,
-                'data' => view('temps.text_other_radio', compact("number"))->render(),
+                'data' => view('temps.text_other_radio', compact('number'))->render(),
             ];
         }
 
@@ -116,11 +134,11 @@ class SurveyController extends Controller
     public function otherCheckbox(Request $request)
     {
         if ($request->ajax()) {
-            $number = $request->get("number");
+            $number = $request->get('number');
 
             return [
                 'success' => true,
-                'data' => view('temps.text_other_checkbox', compact("number"))->render(),
+                'data' => view('temps.text_other_checkbox', compact('number'))->render(),
             ];
         }
 
@@ -193,12 +211,32 @@ class SurveyController extends Controller
         ];
     }
 
+    public function textOther(Request $request)
+    {
+        if ($request->ajax()) {
+            $idQuestion = $request->get('idQuestion');
+            $idAnswer = $request->get('idAnswer');
+
+            return [
+                'success' => true,
+                'data' => view('temps.text_other', compact('idAnswer', 'idQuestion'))
+                    ->render(),
+            ];
+        }
+
+        return [
+            'success' => false,
+        ];
+    }
+
     public function create(Request $request)
     {
         $value = $request->get('survey-name');
-        if (strlen($value) == 0) {
-            $value == config('survey.title_default');
+
+        if (!strlen($value)) {
+            $value = config('survey.title_default');
         }
+
         $survey = $this->surveyRepository
             ->create([
                 'user_id' => Auth::user()->id,
@@ -213,6 +251,11 @@ class SurveyController extends Controller
             $this->questionRepository->createMultiQuestion($survey, $questions, $answers);
         }
 
-        return redirect()->action('User\SurveyController@getHome');
+        return redirect()->action('User\SurveyController@listSurveyUser');
+    }
+
+    public function viewResult($id)
+    {
+        return $this->surveyRepository->resultSurvey($id);
     }
 }

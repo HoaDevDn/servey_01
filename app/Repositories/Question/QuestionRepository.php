@@ -49,10 +49,12 @@ class QuestionRepository extends BaseRepository implements QuestionInterface
     {
         $questionsAdd = [];
         $answersAdd = [];
+
         foreach ($questions as $value) {
-            if ($value == "") {
+            if (!strlen($value)) {
                 $value = config('survey.question_default');
             }
+
             $questionsAdd[] = [
                 'content' => $value,
                 'survey_id' => $survey,
@@ -72,9 +74,10 @@ class QuestionRepository extends BaseRepository implements QuestionInterface
                     $type = array_keys($value)[0];
                     $temp = $value[$type];
 
-                    if ($temp  == "") {
+                    if (!strlen($temp)) {
                         $temp  = config('survey.question_default');
                     }
+
                     $answersAdd[] = [
                         'content' => $temp,
                         'question_id' => $questionIds[$number],
