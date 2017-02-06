@@ -45,21 +45,35 @@ class QuestionRepository extends BaseRepository implements QuestionInterface
         }
     }
 
-    public function createMultiQuestion($survey, $questions, $answers)
+    public function createMultiQuestion($survey, $questions, $answers, $image, $required = null)
     {
         $questionsAdd = [];
         $answersAdd = [];
+        $image = ($image) ?: [
+            'question' => [],
+            'answers' => [],
+        ];
 
-        foreach ($questions as $value) {
-            if (!strlen($value)) {
+        // check the serial number of arrays answer questions coincide with the array or not
+        if (array_keys($questions) !== array_keys($answers)) {
+            return false;
+        }
+
+        if (empty($required)) {
+            $required = [];
+        }
+
+        foreach ($questions as $key => $value) {
+
+            if (!strlen($value) && $questions) {
                 $value = config('survey.question_default');
             }
 
             $questionsAdd[] = [
                 'content' => $value,
                 'survey_id' => $survey,
-                'image' => config('survey.image_default'),
-                'required' => true,
+                'image' => array_key_exists($key, $image['question']) ? $this->uploadImage($image['question'][$key]) : null,
+                'required' => in_array($key, $required),
             ];
         }
 
@@ -72,16 +86,35 @@ class QuestionRepository extends BaseRepository implements QuestionInterface
             foreach (array_keys($questions) as $number => $index) {
                 foreach ($answers[$index] as $key => $value) {
                     $type = array_keys($value)[0];
-                    $temp = $value[$type];
 
-                    if (!strlen($temp)) {
-                        $temp  = config('survey.question_default');
+                    switch ($type) {
+                        case config('survey.type_other_radio'): case config('survey.type_other_checkbox'):
+                            $temp = trans('temp.other');
+                            break;
+                        case config('survey.type_text'):
+                            $temp = trans('temp.text');
+                            break;
+                        case config('survey.type_time'):
+                            $temp = trans('temp.time');
+                            break;
+                        case config('survey.type_date'):
+                            $temp = trans('temp.date');
+                            break;
+                        default:
+                            $temp = $value[$type];
+                            break;
                     }
 
+                    // checking the answers in the question have image and the answer is have any image
+                    $isHaveImage = (array_key_exists($index, $image['answers'])
+                        && array_key_exists($key, $image['answers'][$index]));
                     $answersAdd[] = [
                         'content' => $temp,
                         'question_id' => $questionIds[$number],
                         'type' => $type,
+                        'image' => ($isHaveImage )
+                            ? $this->answerRepository->uploadImage($image['answers'][$index][$key])
+                            : null,
                     ];
                 }
             }
@@ -92,5 +125,17 @@ class QuestionRepository extends BaseRepository implements QuestionInterface
         }
 
         return false;
+    }
+
+    public function uploadImage($file)
+    {
+        if (!$file) {
+            return null;
+        }
+
+        $fileName = uniqid(rand(), true) . '.' . $file->getClientOriginalExtension();
+        $file->move(public_path(config('settings.image_question_path')), $fileName);
+
+        return $fileName;
     }
 }

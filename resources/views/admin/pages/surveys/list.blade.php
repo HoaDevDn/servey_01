@@ -7,7 +7,6 @@
         <div class="card">
             <div class="header">
                 <h4 class="title">{{ trans('generate.list') }} {{ trans('generate.survey') }}</h4>
-                <p class="category">{{ trans('generate.exampe') }}</p>
             </div>
             @include('admin.blocks.alert')
             @include('admin.blocks.list', ['surveys' => $surveyFeatures])

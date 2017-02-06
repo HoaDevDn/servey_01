@@ -11,6 +11,8 @@ class Result extends Model
         'sender_id',
         'recevier_id',
         'content',
+        'name',
+        'email',
     ];
 
     public function answer()

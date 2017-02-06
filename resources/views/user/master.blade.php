@@ -1,53 +1,40 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en" class=" js no-touch csstransforms csstransitions"><!--<![endif]-->
     <head>
-        <title>{{ trans('home.get_survey') }}!</title>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>{{ trans('info.fsurvey') }}</title>
+        <meta name="description" content="">
+        <meta name="author" content="Ansonika">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        {{ Html::style(elixir('/bower/bootstrap/dist/css/bootstrap.css')) }}
-        {{ Html::style(elixir('/user/css/main.css')) }}
-        {{ Html::style(elixir('/user/css/home.css')) }}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        @include('library.css-file')
+        @include('library.js-file')
     </head>
     <body>
-        <input type="hidden" data-number="0" class="url-token" ms-error="{{ trans('home.error') }}"/>
-        <!-- Wrapper -->
-        <div id="wrapper">
-        <!-- Header -->
-            <header id="header">
-                <div class="inner">
-                    <!-- Logo -->
-                    <a href="" class="logo">
-                        <span class="symbol">
-                            {{ Html::image("demo/images/logo.svg") }}
-                        </span>
-                        <span class="title">{{ trans('home.survey') }}</span>
-                    </a>
-                    <!-- Nav -->
-                    <nav>
-                        <ul>
-                            <li><a href="#menu">{{ trans('home.menu') }}</a></li>
-                        </ul>
-                    </nav>
+        @include('user.blocks.popup-send-mail')
+        <input type="hidden" class="data"
+            data-number="{{ config('temp.data_number') }}"
+            data-question="{{ config('temp.data_question') }}"
+            data-error="{{ trans('home.error') }}"
+            data-confirm="{{ trans('temp.confirm') }}"
+            data-email-invalid="{{ trans('temp.email_invalid') }}"
+            data-link="{{ action('SurveyController@autocomplete') }}"
+        />
+        <section id="top-area">
+            @include('user.blocks.menu')
+            <div class="container animated slideInDown">
+                 <div class="row">
+                     <div class="col-md-12 main-title">
+                        <h1>{{ trans('view.title_web') }}</h1>
+                        <p>{{ trans('view.body.intro.slogan') }}</p>
+                    </div>
                 </div>
-            </header>
-        <!-- Menu -->
-                @include('user.blocks.menu')
-        <!-- Main -->
-            <div id="main">
-                @yield('content')
             </div>
-        <!-- Footer -->
-            <footer id="footer">
-                @yield('content-bot')
-            </footer>
-        </div>
-        <!-- Scripts -->
-        {{ Html::script(elixir('/user/js/jquery.min.js')) }}
-        {{ Html::script(elixir('/user/js/skel.min.js')) }}
-        {{ Html::script(elixir('/user/js/util.js')) }}
-        {{ Html::script(elixir('/user/js/main.js')) }}
-        {{ Html::script(elixir('/user/js/question.js')) }}
-        {{ Html::script(elixir('/js/app.js')) }}
+        </section>
+        <section class="container" id="main">
+            @yield('content')
+            @yield('content-info-web')
+        </section>
+        @include('user.blocks.footer')
     </body>
 </html>

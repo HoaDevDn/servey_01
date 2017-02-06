@@ -44,4 +44,16 @@ class AnswerRepository extends BaseRepository implements AnswerInterface
             return false;
         }
     }
+
+    public function uploadImage($file)
+    {
+        if (!$file) {
+            return null;
+        }
+
+        $fileName = uniqid(rand(), true) . '.' . $file->getClientOriginalExtension();
+        $file->move(public_path(config('settings.image_answer_path')), $fileName);
+
+        return $fileName;
+    }
 }

@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class Survey extends Model
 {
@@ -10,11 +12,21 @@ class Survey extends Model
         'title',
         'user_id',
         'feature',
+        'token',
+        'token_manage',
+        'status',
+        'deadline',
+        'description'
     ];
 
     public function invites()
     {
         return $this->hasMany(Invite::class);
+    }
+
+    public function settings()
+    {
+        return $this->hasMany(Setting::class);
     }
 
     public function user()
@@ -30,5 +42,22 @@ class Survey extends Model
     public function likes()
     {
         return $this->hasMany(Like::class);
+    }
+
+    public function setTokenAttribute($value)
+    {
+        return $this->attributes['token'] = (strlen($value) >= 32) ? $value : md5(uniqid(rand(), true));
+    }
+
+    public function getIsLikedAttribute()
+    {
+        $like = $this->likes()->where('user_id', Auth::id())->first();
+
+        return (!is_null($like)) ? true : false;
+    }
+
+    public function getDeadlineAttribute()
+    {
+        return (!empty($this->attributes['deadline'])) ? Carbon::parse($this->attributes['deadline'])->format('Y/m/d H:i') : null;
     }
 }

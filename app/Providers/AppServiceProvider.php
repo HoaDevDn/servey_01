@@ -18,6 +18,8 @@ use App\Repositories\Invite\InviteInterface;
 use App\Repositories\Invite\InviteRepository;
 use App\Repositories\Like\LikeInterface;
 use App\Repositories\Like\LikeRepository;
+use App\Repositories\Setting\SettingInterface;
+use App\Repositories\Setting\SettingRepository;
 use Blade;
 
 class AppServiceProvider extends ServiceProvider
@@ -54,5 +56,6 @@ class AppServiceProvider extends ServiceProvider
         App::bind(ResultInterface::class, ResultRepository::class);
         App::bind(InviteInterface::class, InviteRepository::class);
         App::bind(LikeInterface::class, LikeRepository::class);
+        App::bind(SettingInterface::class, SettingRepository::class);
     }
 }

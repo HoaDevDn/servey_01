@@ -40,4 +40,16 @@ return [
         'client_secret' => env('GOOGLE_SECRET'),
         'redirect' => env('GOOGLE_URL'),
     ],
+
+    'facebook' => [
+        'client_id' => env('FACEBOOK_ID'),
+        'client_secret' => env('FACEBOOK_SECRET'),
+        'redirect' => env('FACEBOOK_URL'),
+    ],
+
+    'twitter' => [
+        'client_id' => env('TWITTER_ID'),
+        'client_secret' => env('TWITTER_SECRET'),
+        'redirect' => env('TWITTER_URL'),
+    ],
 ];

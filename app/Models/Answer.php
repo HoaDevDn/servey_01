@@ -21,4 +21,15 @@ class Answer extends Model
     {
          return $this->hasMany(Result::class);
     }
+
+    public function getImageAttribute()
+    {
+        if (!$this->attributes['image']) {
+            return null;
+        }
+
+        $answerImgUrl = $this->attributes['image'];
+
+        return asset(config('settings.image_answer_path') . $answerImgUrl);
+    }
 }
