@@ -16,10 +16,10 @@
     {{ Form::close() }}
     @if (Auth::check())
         <div class="choose-link">
-            <a href="{{ action('User\SurveyController@getHome') }}">
+            <a href="{{ action('SurveyController@getHome') }}">
                 {{ trans('home.public') }}
             </a>
-            <a href="{{ action('User\SurveyController@listSurveyUser') }}">
+            <a href="{{ action('SurveyController@listSurveyUser') }}">
                 {{ trans('home.me') }}
             </a>
         </div>
@@ -30,13 +30,23 @@
                 <span class="image">
                     {{ Html::image("demo/images/pic0$key.jpg") }}
                 </span>
-                <a href="{{ action('User\SurveyController@answerSurvey', $survey->id) }}">
-                    <h2>{{ $survey->title }}</h2>
+                <a href="{{ action('SurveyController@show', $survey->token) }}">
+                    <h2>{{ $survey->title }}{{ $key }}</h2>
                     <div class="content">
                         <p>{{ $survey->user->name }}</p>
                     </div>
                 </a>
             </article>
+            <div class="remove-survey" data-key="{{ $key }}" id-survey="{{ $survey->id }}" url="{{ action('SurveyController@delete') }}">
+                <span class="glyphicon glyphicon-trash"></span>
+            </div>
+            <div class="send-mail row">
+                <div class="col-md-2">
+                    <span class=" glyphicon glyphicon-envelope"></span>
+                </div>
+                <div class="col-md-9">Send mails</div>
+            </div>
+
         @empty
             <article class="style1">
                 {{ trans('home.dont_have') }}

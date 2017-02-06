@@ -10,13 +10,13 @@
             </li>
         @endif
         <li>
-            <a href="{{ action('User\SurveyController@getHome') }}">
+            <a href="{{ action('SurveyController@getHome') }}">
                 {{ trans('home.home') }}
             </a>
         </li>
         <li><a href="">{{ trans('home.profile') }}</a></li>
         <li>
-            <a href="{{ action('User\SurveyController@create') }}">
+            <a href="{{ action('SurveyController@create') }}">
                 {{ trans('home.create_survey') }}
             </a>
         </li>

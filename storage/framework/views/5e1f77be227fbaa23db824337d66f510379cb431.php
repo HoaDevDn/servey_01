@@ -3,7 +3,7 @@
         <div class="text-question col-md-10">
             <?php echo Form::text("txt-question[question][$number]", '', [
                 'placeholder' => trans('home.enter_question_here'),
-                'required' => true
+                'required' => true,
             ]); ?>
 
         </div>
@@ -23,7 +23,7 @@
             <div class="text-empty">
                 <?php echo Form::text("txt-question[answers][$number][][" . config('survey.type_short') . "]", '', [
                     'placeholder' => trans('temp.short_text'),
-                    'readonly' => true
+                    'readonly' => true,
                 ]); ?>
 
             </div>

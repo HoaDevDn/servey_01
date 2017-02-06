@@ -29,10 +29,10 @@ class UpdateUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->date('birthday');
-            $table->boolean('gender');
-            $table->string('phone');
-            $table->string('address');
+            $table->date('birthday')->change();
+            $table->boolean('gender')->change();
+            $table->string('phone')->change();
+            $table->string('address')->change();
         });
     }
 }

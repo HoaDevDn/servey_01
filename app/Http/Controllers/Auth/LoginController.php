@@ -61,10 +61,10 @@ class LoginController extends Controller
                 return redirect()->action('Admin\DashboardController@index');
             }
 
-            return redirect()->action('User\SurveyController@getHome');
+            return redirect()->action('SurveyController@getHome');
         }
 
-        return redirect()->action('Auth\LoginController@getLogin')->with('message', trans('auth.failed'));
+        return redirect()->action('SurveyController@getHome')->with('message', trans('auth.failed'));
     }
 
     public function logout(Request $request)
@@ -73,6 +73,6 @@ class LoginController extends Controller
         $request->session()->flush();
         $request->session()->regenerate();
 
-        return redirect()->action('User\SurveyController@getHome');
+        return redirect()->action('SurveyController@getHome');
     }
 }

@@ -22,6 +22,7 @@ elixir(mix => {
    .webpack('app.js')
    .scripts('chart.js', 'public/admin/js/chart.js')
    .scripts('question.js', 'public/user/js/question.js')
+   .scripts('component.js', 'public/user/js/component.js')
    .scripts('survey.js', 'public/admin/js/survey.js')
    .scripts('admin-script.js', 'public/admin/js/admin-script.js')
    .copy('resources/assets/fonts', 'public/admin/fonts')

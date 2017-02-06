@@ -33,13 +33,17 @@
                         </div>
                         <div class="col-md-4 col-radio">
                             <div>
-                                {{ Form::radio('gender','', '', ['id' => "male"]) }}
+                                {{ Form::radio('gender','', '', [
+                                    'id' => 'male',
+                                ]) }}
                                 <label for="male">
                                     {{ trans('info.male') }}
                                 </label>
                             </div>
                             <div class="col-female">
-                                {{ Form::radio('gender','', '', ['id' => "female"]) }}
+                                {{ Form::radio('gender','', '', [
+                                    'id' => 'female',
+                                    ]) }}
                                 <label for="female">
                                    {{ trans('info.female') }}
                                 </label>

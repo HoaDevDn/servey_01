@@ -11,7 +11,7 @@
                     <div class="field half first">
                         {!! Form::email('email', '', [
                             'placeholder' => 'Email',
-                            'id' => 'email'
+                            'id' => 'email',
                         ]) !!}
                     </div>
                     <div class="field half">
@@ -45,7 +45,7 @@
                         <li>
                             {!! Form::button('Register', [
                                 'class' => 'bt-register special bt-action',
-                                'url' => action('Auth\RegisterController@register')
+                                'url' => action('Auth\RegisterController@register'),
                             ]) !!}
                             {!! Form::submit('Login', ['class' => 'special']) !!}
                         </li>

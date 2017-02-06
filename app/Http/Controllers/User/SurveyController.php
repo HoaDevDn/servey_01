@@ -7,18 +7,25 @@ use App\Http\Controllers\Controller;
 use App\Repositories\Survey\SurveyInterface;
 use App\Repositories\Question\QuestionInterface;
 use App\Repositories\Answer\AnswerInterface;
+use App\Repositories\Invite\InviteInterface;
+use App\Repositories\User\UserInterface;
+use Khill\Lavacharts\Lavacharts;
+use App\Mail\InviteSurvey;
 use Auth;
+use Mail;
 
 class SurveyController extends Controller
 {
     protected $surveyRepository;
     protected $questionRepository;
     protected $answerRepository;
+    protected $inviteRepository;
 
     public function __construct(
         SurveyInterface $survey,
         QuestionInterface $question,
-        AnswerInterface $answer
+        AnswerInterface $answer,
+        InviteInterface $inviteRepository
     ) {
         $this->surveyRepository = $survey;
         $this->questionRepository = $question;
@@ -76,9 +83,9 @@ class SurveyController extends Controller
         ];
     }
 
-    public function answerSurvey($id)
+    public function show($token)
     {
-        $surveys = $this->surveyRepository->where('id', $id)->first();
+        $surveys = $this->surveyRepository->where('token', $token)->first();
 
         return view('survey.answer', compact('surveys'));
     }
@@ -242,6 +249,7 @@ class SurveyController extends Controller
                 'user_id' => Auth::user()->id,
                 'title' => $value,
                 'feature' => config('settings.survey.not_feature'),
+                'token' => md5(uniqid(rand(), true)),
             ]);
         $txtQuestion = $request->get('txt-question');
         $questions = $txtQuestion['question'];
@@ -254,8 +262,36 @@ class SurveyController extends Controller
         return redirect()->action('User\SurveyController@listSurveyUser');
     }
 
-    public function viewResult($id)
+    public function viewResult($token)
     {
-        return $this->surveyRepository->resultSurvey($id);
+        return $this->surveyRepository->resultSurvey($token);
+    }
+
+    public function inviteUser(Request $request)
+    {
+        $isSuccess = false;
+
+        if ($request->ajax()) {
+            $data['emails'] = $request->get('emails');
+            $data['survey'] = $request->get('surveyId');
+
+            if ($data['emails'] && $data['survey']) {
+                $survey = $this->surveyRepository->find($data['survey']);
+                $invite = $this->inviteRepository->invite(auth()->id(), $data['emails'], $data['survey']);
+
+                if ($invite) {
+                    Mail::to($data['emails'])->queue(new InviteSurvey([
+                        'senderName' => Auth::user()->name,
+                        'email' => Auth::user()->email,
+                        'title' => $survey->title,
+                        'link' => action('SurveyController@answer', $survey->token),
+                    ]));
+
+                    $isSuccess = true;
+                }
+            }
+        }
+
+        return response()->json(['success' => $isSuccess]);
     }
 }

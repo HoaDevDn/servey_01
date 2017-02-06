@@ -3,7 +3,7 @@
         <div class="text-question col-md-10">
             <?php echo Form::text("txt-question[question][$number]", '', [
                 'placeholder' => trans('home.enter_question_here'),
-                'required' => true
+                'required' => true,
             ]); ?>
 
         </div>
@@ -21,7 +21,7 @@
             <div class="div-text-answer">
                 <?php echo Form::text("txt-question[answers][$number][][" . config('survey.type_radio') . "]", '', [
                     'placeholder' => trans('home.enter_answer_here'),
-                    'required' => true
+                    'required' => true,
                 ]); ?>
 
             </div>
@@ -35,9 +35,9 @@
         <div class="col-md-1 div-radius"></div>
         <div class="col-md-9">
             <div class="div-text-answer">
-                <?php echo Form::text("txt-question[answers][$number][][".config('survey.type_radio')."]", '', [
+                <?php echo Form::text("txt-question[answers][$number][][" . config('survey.type_radio') . "]", '', [
                     'placeholder' => trans('home.enter_answer_here'),
-                    'required' => true
+                    'required' => true,
                 ]); ?>
 
             </div>
@@ -54,15 +54,15 @@
                 'class' => 'add-radio',
                 'id-as' => $number,
                 'typeId' => config('survey.type_radio'),
-                'url' => action('User\SurveyController@radioAnswer')
+                'url' => action('SurveyController@radioAnswer'),
             ]); ?>
 
         </div>
         <div class="col-md-4">
             <?php echo Form::button(trans('home.add_other'), [
                 'class' => 'add-radio-other other' . $number,
-                'url' => action('User\SurveyController@otherRadio'),
-                'typeId' => config('survey.type_other_radio')
+                'url' => action('SurveyController@otherRadio'),
+                'typeId' => config('survey.type_other_radio'),
             ]); ?>
 
         </div>

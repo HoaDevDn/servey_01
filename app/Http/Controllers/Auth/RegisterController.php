@@ -49,7 +49,7 @@ class RegisterController extends Controller
         if ($user) {
             Auth::login($user);
 
-            return redirect()->action('User\SurveyController@getHome');
+            return redirect()->action('SurveyController@getHome');
         }
 
         return redirect()

@@ -12,14 +12,14 @@
             </li>
         <?php endif; ?>
         <li>
-            <a href="<?php echo e(action('User\SurveyController@getHome')); ?>">
+            <a href="<?php echo e(action('SurveyController@getHome')); ?>">
                 <?php echo e(trans('home.home')); ?>
 
             </a>
         </li>
         <li><a href=""><?php echo e(trans('home.profile')); ?></a></li>
         <li>
-            <a href="<?php echo e(action('User\SurveyController@create')); ?>">
+            <a href="<?php echo e(action('SurveyController@create')); ?>">
                 <?php echo e(trans('home.create_survey')); ?>
 
             </a>

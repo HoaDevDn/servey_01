@@ -20,11 +20,11 @@
 
     <?php if(Auth::check()): ?>
         <div class="choose-link">
-            <a href="<?php echo e(action('User\SurveyController@getHome')); ?>">
+            <a href="<?php echo e(action('SurveyController@getHome')); ?>">
                 <?php echo e(trans('home.public')); ?>
 
             </a>
-            <a href="<?php echo e(action('User\SurveyController@listSurveyUser')); ?>">
+            <a href="<?php echo e(action('SurveyController@listSurveyUser')); ?>">
                 <?php echo e(trans('home.me')); ?>
 
             </a>
@@ -37,13 +37,23 @@
                     <?php echo e(Html::image("demo/images/pic0$key.jpg")); ?>
 
                 </span>
-                <a href="<?php echo e(action('User\SurveyController@answerSurvey', $survey->id)); ?>">
-                    <h2><?php echo e($survey->title); ?></h2>
+                <a href="<?php echo e(action('SurveyController@show', $survey->token)); ?>">
+                    <h2><?php echo e($survey->title); ?><?php echo e($key); ?></h2>
                     <div class="content">
                         <p><?php echo e($survey->user->name); ?></p>
                     </div>
                 </a>
             </article>
+            <div class="remove-survey" data-key="<?php echo e($key); ?>" id-survey="<?php echo e($survey->id); ?>" url="<?php echo e(action('SurveyController@delete')); ?>">
+                <span class="glyphicon glyphicon-trash"></span>
+            </div>
+            <div class="send-mail row">
+                <div class="col-md-2">
+                    <span class=" glyphicon glyphicon-envelope"></span>
+                </div>
+                <div class="col-md-9">Send mails</div>
+            </div>
+
         <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); if ($__empty_1): ?>
             <article class="style1">
                 <?php echo e(trans('home.dont_have')); ?>

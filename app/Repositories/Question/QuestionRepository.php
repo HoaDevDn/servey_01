@@ -74,8 +74,26 @@ class QuestionRepository extends BaseRepository implements QuestionInterface
                     $type = array_keys($value)[0];
                     $temp = $value[$type];
 
-                    if (!strlen($temp)) {
-                        $temp  = config('survey.question_default');
+                    // if ($type == config('survey.type_other_radio') || $type == config('survey.type_other_checkbox') ) {
+                    //     $temp = 'Other';
+                    // // } else if (!strlen($temp)) {
+                    // //     $temp = config('survey.answer_default');
+                    // // }
+                    // } else if($type == config('survey.type_short')) {
+                    //     $temp = 'Short text';
+                    // } else if($type == config('survey.type_long')) {
+                    //     $temp = 'Long text';
+                    // }
+                    switch ($type) {
+                        case (config('survey.type_other_radio') || config('survey.type_other_checkbox')):
+                            $temp = 'Other';
+                            break;
+                        case config('survey.type_short'):
+                            $temp = 'Short text';
+                            break;
+                        case config('survey.type_long'):
+                            $temp = 'Long text';
+                            break;
                     }
 
                     $answersAdd[] = [
@@ -85,7 +103,7 @@ class QuestionRepository extends BaseRepository implements QuestionInterface
                     ];
                 }
             }
-
+            // dd($answersAdd);
             if ($this->answerRepository->multiCreate($answersAdd)) {
                 return true;
             }
