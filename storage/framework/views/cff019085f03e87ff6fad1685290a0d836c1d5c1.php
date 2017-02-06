@@ -3,7 +3,7 @@
         <div class="text-question col-md-10">
             <?php echo Form::text("txt-question[question][$number]", '', [
                 'placeholder' => trans('home.enter_question_here'),
-                'required' => true
+                'required' => true,
             ]); ?>
 
         </div>
@@ -21,7 +21,7 @@
             <div class="div-text-answer">
                 <?php echo Form::text("txt-question[answers][$number][][" . config('survey.type_checkbox') . "]", '', [
                     'placeholder' => trans('home.enter_answer_here'),
-                    'required' => true
+                    'required' => true,
                 ]); ?>
 
             </div>
@@ -37,7 +37,7 @@
             <div class="div-text-answer">
                 <?php echo Form::text("txt-question[answers][$number][][" . config('survey.type_checkbox') . "]", '', [
                     'placeholder' => trans('home.enter_answer_here'),
-                    'required' => true
+                    'required' => true,
                 ]); ?>
 
             </div>
@@ -54,15 +54,15 @@
                 'class' => 'add-checkbox',
                 'id-as' => $number,
                 'typeId' => config('survey.type_checkbox'),
-                'url' => action('User\SurveyController@checkboxAnswer')
+                'url' => action('SurveyController@checkboxAnswer'),
             ]); ?>
 
         </div>
         <div class="col-md-4">
             <?php echo Form::button(trans('home.add_other'), [
                 'class' => 'add-checkbox-other other' . $number,
-                'url' => action('User\SurveyController@otherCheckbox'),
-                'typeId' => config('survey.type_other_checbox')
+                'url' => action('SurveyController@otherCheckbox'),
+                'typeId' => config('survey.type_other_checbox'),
             ]); ?>
 
         </div>

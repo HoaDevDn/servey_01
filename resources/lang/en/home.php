@@ -5,7 +5,7 @@ return [
     'login' => 'Login',
     'logout' => 'Logout',
     'get_survey' => 'Get Survey',
-    'name_survey' => 'Survey name',
+    'name_survey' => "Survey's name",
     'add_option' => 'Add option',
     'add_other' => 'Add other',
     'checkboxes' => 'Checkboxes',
@@ -26,7 +26,7 @@ return [
     'submit' => 'Submit',
     'error' => 'Error',
     'me' => 'Your Seft',
-    'dont_have' => 'Dont have any survey',
+    'dont_have' => "Don't have any survey",
     'public' => 'Public',
     'update_info' => 'Update Info',
     'redirect_admin' => 'go to admin pages',
@@ -38,4 +38,5 @@ return [
     'menu' => 'Menu',
     'wellcome' => 'Wellcome',
     'finish' => 'Finish',
+    'invited' => 'Invited',
 ];

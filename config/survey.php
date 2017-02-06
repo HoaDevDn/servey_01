@@ -6,6 +6,7 @@ return [
     'question_default' => 'Question Name',
     'answer_default' => 'Answer Name',
     'image_default' => 'None',
+    'set_public' => 1,
     'type_radio' => 1,
     'type_checkbox' => 2,
     'type_short' => 3,

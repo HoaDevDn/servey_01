@@ -30,6 +30,8 @@ return [
         'generate' => 'Status',
         'block' => 'Block',
         'active' => 'Acvite',
+        'process' => 'Watting',
+        'finish' => 'Accept',
     ],
     'exampe' => 'Exampe',
     'remove' => 'Remove',
@@ -44,4 +46,6 @@ return [
     'create' => [
         'survey' => 'Create Survey',
     ],
+    'title' => 'Title',
+    'requests' => 'Requests',
 ];

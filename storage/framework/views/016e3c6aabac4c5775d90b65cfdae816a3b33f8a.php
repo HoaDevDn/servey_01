@@ -1,23 +1,40 @@
 <?php $__env->startSection('content'); ?>
-    <?php echo Form::open([ 'action ' => 'User\SurveyController@create', 'class' => 'form-horizontal']); ?>
+    <?php echo Form::open([ 'action ' => 'SurveyController@create', 'class' => 'form-horizontal']); ?>
 
         <div class="content-question container">
             <div class="row">
-            <div class="col-md-1"></div>
-                <div class="col-md-6 col-md-offset-3">
-                    <?php echo Form::text('survey-name', 'surver name', [
-                        'placeholder' => trans('home.name_survey'),
-                        'required' => true,
-                    ]); ?>
+                <div class="col-md-1"></div>
+                    <div class="col-md-6">
+                        <?php echo Form::text('survey-name', 'surver name', [
+                            'placeholder' => trans('home.name_survey'),
+                            'required' => true,
+                        ]); ?>
 
-                </div>
+                    </div>
+                    <div class="col-md-5 col-option" >
+                        <div class="squaredOne">
+                            <?php echo e(Form::checkbox('box-public', config('survey.set_public'), '', [
+                                'id' => 'squaredTwo',
+                            ])); ?>
+
+                            <?php echo e(Form::label('squaredTwo', ' ')); ?>
+
+                        </div>
+                        <div class="div-public">Public</div>
+                        <div class="div-finish">
+                            <?php echo Form::submit(trans('home.finish'), [
+                                'class'=>'bt-finish',
+                            ]); ?>
+
+                        </div>
+                    </div>
             </div>
             <div class="add-question col-md-1">
                 <a class="glyphicon glyphicon-plus-sign">
                     <ul>
                         <li>
                             <?php echo Form::button(trans('home.choices'), [
-                                'url' => action('User\SurveyController@radioQuestion'),
+                                'url' => action('SurveyController@radioQuestion'),
                                 'id' => 'radio-button',
                                 'typeId' => config('survey.type_radio'),
                             ]); ?>
@@ -25,7 +42,7 @@
                         </li>
                         <li>
                             <?php echo Form::button(trans('home.checkboxes'), [
-                                'url' => action('User\SurveyController@checkboxQuestion'),
+                                'url' => action('SurveyController@checkboxQuestion'),
                                 'id' => 'checkbox-button',
                                 'typeId' => config('survey.type_checkbox'),
                             ]); ?>
@@ -33,7 +50,7 @@
                         </li>
                         <li>
                             <?php echo Form::button(trans('home.short_answer'), [
-                                'url' => action('User\SurveyController@shortQuestion'),
+                                'url' => action('SurveyController@shortQuestion'),
                                 'id' => 'short-button',
                                 'typeId' => config('survey.type_short'),
                             ]); ?>
@@ -41,7 +58,7 @@
                         </li>
                         <li>
                             <?php echo Form::button(trans('home.passage'), [
-                                'url' => action('User\SurveyController@longQuestion'),
+                                'url' => action('SurveyController@longQuestion'),
                                 'id' => 'long-button',
                                 'typeId' => config('survey.type_long'),
                             ]); ?>
@@ -51,9 +68,6 @@
                 </a>
             </div>
             <div class="hide"></div>
-            <?php echo Form::submit(trans('home.finish'), [
-                'class'=>'bt-finish',
-            ]); ?>
 
         </div>
     <?php echo Form::close(); ?>

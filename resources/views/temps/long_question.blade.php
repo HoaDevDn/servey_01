@@ -20,7 +20,7 @@
         </div>
         <div class="col-md-8">
             <div class="text-empty">
-                {!! Form::text("txt-question[answers][$number][][". config('survey.type_long')."]", '',[
+                {!! Form::text("txt-question[answers][$number][][" . config('survey.type_long') . "]", '',[
                     'placeholder' => trans('temp.long_text'),
                     'readonly' => true,
                 ]) !!}

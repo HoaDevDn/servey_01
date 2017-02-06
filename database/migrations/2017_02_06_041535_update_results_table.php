@@ -15,7 +15,7 @@ class UpdateResultsTable extends Migration
     {
         Schema::table('results', function (Blueprint $table) {
             $table->integer('sender_id')->nullable()->change();
-            $table->integer('content')->nullable()->change();
+            $table->string('content')->nullable()->change();
         });
     }
 
@@ -28,7 +28,7 @@ class UpdateResultsTable extends Migration
     {
         Schema::table('results', function (Blueprint $table) {
             $table->integer('sender_id')->change();
-            $table->integer('content')->change();
+            $table->string('content')->change();
         });
     }
 }

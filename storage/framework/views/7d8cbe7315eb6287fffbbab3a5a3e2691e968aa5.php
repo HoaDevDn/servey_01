@@ -2,7 +2,7 @@
     <h2><?php echo e(trans('home.menu')); ?></h2>
     <ul>
         <?php if(Auth::check()): ?>
-            <li>
+            <li class="info-img-name">
                 <?php echo Html::image(Auth::user()->image); ?>
 
                 <span>
@@ -12,20 +12,23 @@
             </li>
         <?php endif; ?>
         <li>
-            <a href="<?php echo e(action('User\SurveyController@getHome')); ?>">
+            <a href="<?php echo e(action('SurveyController@getHome')); ?>">
                 <?php echo e(trans('home.home')); ?>
 
             </a>
         </li>
-        <li><a href=""><?php echo e(trans('home.profile')); ?></a></li>
         <li>
-            <a href="<?php echo e(action('User\SurveyController@create')); ?>">
+            <a href="<?php echo e(action('SurveyController@create')); ?>">
                 <?php echo e(trans('home.create_survey')); ?>
 
             </a>
         </li>
-        <li><a href=""><?php echo e(trans('home.update_info')); ?></a></li>
-        <li><a href=""><?php echo e(trans('home.history')); ?></a></li>
+        <li>
+            <a href="<?php echo e(action('User\UserController@show')); ?>">
+                <?php echo e(trans('home.update_info')); ?>
+
+            </a>
+        </li>
         <li><a href="<?php echo e((Auth::check()) ?
                 action('Auth\LoginController@logout') : action('Auth\LoginController@login')); ?>">
                <?php echo e((Auth::check()) ? trans('home.logout') : trans('home.login')); ?>

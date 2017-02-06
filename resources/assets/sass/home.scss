@@ -384,15 +384,13 @@
 }
 
 .container-other {
+    margin-top: -5px;
     >div:nth-child(1) {
         float: left;
-        margin-left: 15px;
-        margin-top: 6px;
     }
     >div:nth-child(2) {
         float: left;
-        margin-left: 8px;
-
+        margin-left: -10px;
         >div:nth-child(1) {
             position: absolute;
             width: 54%;
@@ -406,8 +404,14 @@
         }
         >div:nth-child(2) {
             position: relative;
-            margin-top: 5px;
             margin-left: 5px;
+        }
+    }
+    >.col-md-5 {
+        margin-top: 4px;
+
+        >input[type="text"] {
+                height: 2em;
         }
     }
 }
@@ -473,17 +477,30 @@
 }
 
 .bt-finish {
-    margin-top: 10px;
-    margin-right: 60px;
+    margin-top: -10px;
+    margin-right: 110px;
     padding: 5px 10px;;
     border: 0;
     font-weight: bold;
     border-radius: 5px;
     float: right;
+    height: 3em !important;
+    line-height: 3em !important;
+
     &:hover {
-        background: #c3ed9c;
+
         color: white;
     }
+}
+
+.div-public {
+    margin-left: 45px;
+    font-size: 25px;
+    margin-top: -55px;
+}
+.div-finish {
+    display: none;
+    margin-top: -50px;
 }
 
 .table.table-striped {
@@ -622,11 +639,10 @@
     .col-female {
         margin-left: 55px;
     }
-
 }
 
 .info-last {
-    margin-top: 10px;
+    margin-top: 30px;
 }
 
 .div-search {
@@ -640,7 +656,7 @@
         >input[type="text"] {
             height: 53px;
             width: 100%;
-            border-radius: 5px;
+            radiusborder-: 5px;
             margin-bottom: -3px;
             font-size: 25px;
             padding-left: 10px;
@@ -651,4 +667,241 @@
         margin-bottom: 5px;
         float: left;
     }
+}
+
+.popupBackground {
+    width: 100%;
+    height: 100%;
+    background: #333;
+    opacity: 0.9;
+    position: fixed;
+    display: none;
+
+    .popupCenter {
+        left:30%;
+        position: absolute;
+        top: 21%;
+
+        .popupInfo {
+            width: 475px;
+            padding: 30px 50px;
+            border-radius: 10px;
+            background: white;
+            opacity: 1;
+
+            .close {
+                position: absolute;
+                top: -7px;
+                right: -7px;
+                opacity: 0.9;
+
+            }
+        }
+    }
+    .bootstrap-tagsinput {
+        width: 400px;
+        line-height: 30px;
+
+        >input[type="text"] {
+            height: 2em;
+        }
+    }
+}
+
+.art-container {
+    position: relative;
+}
+
+.div-option {
+    position: absolute;
+    top: -30px;left: 40px;
+    padding:0px;
+    width: 361px;
+}
+
+.remove-survey {
+    width: 24px;
+    padding: 1px 22px 0px 0px;
+
+    &:hover {
+        color: #f2849e;
+        cursor: pointer;
+    }
+}
+
+.mark-survey {
+    padding: 0px;
+    font-size: 20px;
+    padding-left: 4px;
+    padding-right: 0px;
+
+    &:hover {
+        color: #f2849e;
+        cursor: pointer;
+    }
+}
+
+.send-mail {
+    width: 120px;
+    padding: 0px;
+    margin-left: 0px;
+    padding-left: 3px;
+    .col-md-2 {
+        padding: 0px;
+        padding-top: 2px;
+    }
+
+    .col-md-9 {
+        padding: 0px;
+        margin-left: 3px;
+    }
+
+    &:hover {
+        color: #f2849e;
+        cursor: pointer;
+    }
+}
+
+.view-result {
+    width: 120px;
+    padding: 0px;
+    float: right;
+    padding-left: 11px;
+
+    .col-md-2 {
+        padding: 0px;
+        padding-top: 2px;
+    }
+
+    .col-md-9 {
+        padding: 0px;
+        margin-left: 3px;
+    }
+
+    &:hover {
+        color: #f2849e;
+        cursor: pointer;
+    }
+}
+
+.div-send {
+    margin-top: 30px;
+    padding-left: 75%;
+}
+
+.col-option {
+    padding-top: 35px;
+}
+
+/* .checkbox*/
+    $activeColor: #27ae60; //green
+    $darkenColor: darken($activeColor, 20%);
+
+.squaredOne {
+    input[type="checkbox"] + label {
+        padding-left: 0;
+        position: absolute;
+    }
+
+    input[type="checkbox"] + label::before {
+        content: none;
+    }
+    margin-left:5px !important;
+    padding: 0px;
+    width: 28px;
+    height: 28px;
+    position: relative;
+    margin: 20px auto;
+    background: #fcfff4;
+    background: linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+    box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
+
+    label {
+        width: 20px;
+        height: 20px;
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        cursor: pointer;
+        background: linear-gradient(top, #222 0%, #45484d 100%);
+        box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
+
+        &:after {
+            content: '';
+            width: 16px;
+            height: 16px;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            background: $activeColor;
+            background: linear-gradient(top, $activeColor 0%, $darkenColor 100%);
+            box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
+            opacity: 0;
+        }
+        &:hover::after {
+            opacity: 0.3;
+        }
+    }
+
+    input[type=checkbox] {
+        visibility: hidden;
+        &:checked + label:after {
+           opacity: 1;
+        }
+    }
+}
+
+#header .logo .symbol {
+    margin-right: 0px;
+}
+
+.title {
+    margin-left: -7px;
+}
+
+.show-chart {
+    width: 660px !important;
+    padding: 0px;
+    box-shadow: 5px 5px 5px #baddc6;
+    -moz-box-shadow: 5px 5px 5px #baddc6;
+    -webkit-box-shadow: 0px 0px 5px 5px #baddc6;
+
+    border-top: 1px solid #baddc6;
+    border-left: 1px solid #baddc6;
+    margin-top: 20px;
+}
+
+#container-chart {
+    background: gray;
+}
+
+.question-chart {
+    padding:15px;
+    text-align: center;
+
+    >h3 {
+        margin-bottom: 0px;
+    }
+}
+
+.content-chart {
+    padding-left: 20px;
+    padding-bottom: 15px;
+
+    h5 {
+        margin: 5px;
+    }
+}
+
+.info-img-name {
+    >img{
+        width: 50px;
+        height:50px;
+        border-radius: 5px;
+    }
+}
+
+#frm-birthday {
+    border: 0px;
+    border-bottom: 1px solid #becad6;
 }

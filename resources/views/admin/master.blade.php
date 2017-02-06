@@ -13,7 +13,7 @@
     {!! Html::style(elixir('/admin/css/bootstrap.css')) !!}
     {!! Html::style(elixir('/admin/css/bootstrap.min.css')) !!}
     {!! Html::style(elixir('/css/app.css')) !!}
-</head>
+    {!! Html::style(elixir('/admin/css/admin-pages.css')) !!}
 <body>
     <div class="wrapper">
         <div class="sidebar" data-color="blue" data-image="assets/img/sidebar-5.jpg">
@@ -26,7 +26,7 @@
                 </div>
                 <ul class="nav">
                     <li class="active">
-                        <a href="{{ action('HomeController@index') }}">
+                        <a href="{{ action('Admin\DashboardController@index') }}">
                             <i class="pe-7s-graph"></i>
                             <p>{{ trans('admin.dashboard') }}</p>
                         </a>
@@ -43,6 +43,14 @@
                             <p>{{ trans('generate.list') }} {{ trans('generate.survey') }}</p>
                         </a>
                     </li>
+                    @if (Auth::user()->isSupperAdmin())
+                        <li>
+                            <a href="{{ action('Admin\RequestController@index') }}">
+                                <i class="pe-7s-news-paper"></i>
+                                <p>{{ trans('generate.request') }}</p>
+                            </a>
+                        </li>
+                    @endif
                     <li>
                         <a href="">
                             <i class="pe-7s-bell"></i>
@@ -67,9 +75,15 @@
     {!! Html::script(elixir('/js/app.js')) !!}
     {!! Html::script(elixir('/admin/js/jquery.js')) !!}
     {!! Html::script(elixir('/admin/js/bootstrap.min.js')) !!}
-    {!! Html::script(elixir('/admin/js/admin-script.js')) !!}
-    {!! Html::script(elixir('/admin/js/chart.js')) !!}
+    {!! Html::script(elixir('/admin/js/admin-script.js')) !!}}
     {!! Html::script(elixir('/admin/js/survey.js')) !!}
+    {!! Html::script(elixir('/admin/js/form-request.js')) !!}
     {!! Html::script(elixir('bower/bootstrap/dist/js/bootstrap.min.js')) !!}
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    {!! Html::script(elixir('/admin/js/chart.js')) !!}
 </body>
 </html>

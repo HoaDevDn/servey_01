@@ -66,7 +66,7 @@
 
                             <?php echo Form::button('Login', [
                                 'class' => 'bt-login special bt-action',
-                                'url' => action('User\SurveyController@getHome')
+                                'url' => action('SurveyController@getHome')
                             ]); ?>
 
                         </li>

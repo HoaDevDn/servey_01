@@ -60,7 +60,7 @@
                             {!! Form::submit('Register', ['class' => 'special']) !!}
                             {!! Form::button('Login', [
                                 'class' => 'bt-login special bt-action',
-                                'url' => action('User\SurveyController@getHome')
+                                'url' => action('SurveyController@getHome')
                             ]) !!}
                         </li>
                     </ul>
