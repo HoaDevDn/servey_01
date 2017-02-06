@@ -13,7 +13,7 @@
                     </a>
                 </li>
                 <li class ="dropdown">
-                   <a href="" class="dropdown-toggle" data-toggle="dropdown">
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-search"></i>
                     </a>
                     {!! Form::open(['action' => 'Admin\UserController@search', 'method' => 'GET']) !!}
@@ -25,7 +25,6 @@
                     {!! Form::close() !!}
                 </li>
             </ul>
-
             <ul class="nav navbar-nav navbar-right">
                 <li>
                    <a href="{{ action('Admin\UserController@show', [Auth::user()->id]) }}">
@@ -33,28 +32,23 @@
                     </a>
                 </li>
                 <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             {{ trans('generate.profile') }}
                             <b class="caret"></b>
-                      </a>
-                      <ul class="dropdown-menu">
+                    </a>
+                    <ul class="dropdown-menu">
                         <li>
                            <a href="{{ action('Admin\UserController@show', [Auth::user()->id]) }}">
                                {{ trans('generate.account') }}
                             </a>
                         </li>
-                        <li><a href="">{{ trans('generate.create.survey') }}</a></li>
-                        <li>
-                            <a href="">{{ trans('generate.invite') }}</a>
-                        </li>
                         <li><a href="">{{ trans('admin.go_home') }}</a></li>
-                        <li class="divider"></li>
                         <li>
                             <a href="{{ action('Auth\LoginController@logout') }}">
                                 {{ trans('generate.logout') }}
                             </a>
                         </li>
-                      </ul>
+                    </ul>
                 </li>
             </ul>
         </div>

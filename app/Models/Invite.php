@@ -10,6 +10,8 @@ class Invite extends Model
         'sender_id',
         'recevier_id',
         'survey_id',
+        'mail',
+        'status',
     ];
 
     public function sender()

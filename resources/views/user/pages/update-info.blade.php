@@ -1,90 +1,187 @@
 @extends('user.master')
 @section('content')
-    {{ Form::open() }}
-        <div class="info-update">
-            <div>
-                <h2>{{ trans('info.update_user_info') }}</h2>
-                <div>
-                    <div class="ct-info row">
-                        <div class="col-md-1">
-                            {{ trans('info.name') }}
+    <div id="" class="survey_container animated zoomIn wizard" novalidate="novalidate">
+        <div id="top-wizard">
+            <strong class="tag-wizard-top">
+                {{ trans('user.update_info') }}
+            </strong>
+        </div>
+        {!! Form::open([
+            'action' => 'User\UserController@update',
+            'method' => 'PUT',
+            'enctype' => 'multipart/form-data',
+        ]) !!}
+            <div id="middle-wizard" class="wizard-register wizard-branch wizard-wrapper">
+                <div class="step wizard-step current">
+                    @if (Session::has('message'))
+                        <div class="alert alert-info alert-message">
+                            {{ Session::get('message') }}
                         </div>
-                        <div class="col-md-4">
-                            {!! Form::text('phone', Auth::user()->name, [
-                                'placeholder' => trans('info.name'),
-                            ]) !!}
+                    @endif
+                    @if (Session::has('message-fail'))
+                        <div class="alert alert-danger alert-message">
+                            {{ Session::get('message-fail') }}
                         </div>
-                    </div>
-                </div>
-                <div>
-                    <div class="ct-info row">
-                        <div class="col-md-1">
-                            {{ trans('info.image') }}
+                    @endif
+                    <div class="row">
+                        <h3 class="label-header col-md-10 wizard-header">
+                            {{ trans('user.enter_info') }}
+                        </h3>
+                        <div class="col-md-6">
+                            <ul class="data-list">
+                                <li>
+                                    <div class="container-infor">
+                                        {!! Html::image(config('settings.image_system') . 'email.png', '') !!}
+                                        {!! Form::email('email', $user->email, [
+                                            'placeholder' => trans('user.your_email'),
+                                            'id' => 'email',
+                                            'class' => 'required form-control',
+                                        ]) !!}
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="container-infor">
+                                        {!! Html::image(config('settings.image_system') . 'name.png', '') !!}
+                                        {!! Form::text('name', $user->name, [
+                                            'placeholder' => trans('user.your_name'),
+                                            'id' => 'name',
+                                            'class' => 'required form-control',
+                                        ]) !!}
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="container-infor">
+                                        {!! Html::image(config('settings.image_system') . 'birthday3.png', '') !!}
+                                        {!! Form::text('birthday', $user->birthday, [
+                                            'placeholder' => trans('user.birthday'),
+                                            'class' => 'frm-date-2 required form-control',
+                                        ]) !!}
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="container-infor">
+                                        {!! Html::image(config('settings.image_system') . 'phone.png', '') !!}
+                                        {!! Form::text('phone', $user->phone, [
+                                            'placeholder' => trans('user.phone'),
+                                            'class' => 'required form-control',
+                                        ]) !!}
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="container-infor">
+                                        {!! Html::image(config('settings.image_system') . 'address.png', '') !!}
+                                        {!! Form::text('address', $user->address, [
+                                            'placeholder' => trans('user.address'),
+                                            'class' => 'required form-control',
+                                        ]) !!}
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
-                        <div class="col-md-4 col-image">
-                            <input type="file" name="">
+                        <div class="col-md-6">
+                            <ul class="data-list">
+                                <li>
+                                    <div class="container-infor">
+                                        {!! Html::image(config('settings.image_system') . 'lock3.png', '') !!}
+                                        {!! Form::password('password', [
+                                            'id' => 'password',
+                                            'class' => 'required form-control',
+                                            'placeholder' => 'Old-password',
+                                        ]) !!}
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="container-infor">
+                                        {!! Html::image(config('settings.image_system') . 'lock2.png', '') !!}
+                                        {!! Form::password('password', [
+                                            'id' => 'password',
+                                            'class' => 'required form-control',
+                                            'placeholder' => 'New password',
+                                        ]) !!}
+                                    </div>
+                                </li>
+                                <div class="container-infor">
+                                    {!! Html::image(config('settings.image_system') . 'lock3.png', '') !!}
+                                    {!! Form::password('password_confirmation', [
+                                        'id' => 'password-confirm',
+                                        'class' => 'required form-control',
+                                        'placeholder' => trans('user.retype_new_password'),
+                                    ]) !!}
+                                </div>
+                                <li>
+                                    <div class="row">
+                                        <div class="avatar-img col-md-2">
+                                            {{ trans('user.avatar') }}
+                                        </div>
+                                         <div class="col-md-2">
+                                           {!! Html::image($user->image, '', [
+                                                'class' => 'img-avatar',
+                                           ]) !!}
+                                        </div>
+                                        <div class="col-md-7">
+                                            {!! Form::button('<span class="glyphicon glyphicon-picture span-menu"></span>' . trans('user.chooser_new_image'), [
+                                                'id' => 'image',
+                                                'class' => 'choose-image',
+                                            ]) !!}
+                                            {!! Form::file('image', [
+                                                'id' => 'image',
+                                                'class' => 'button-file-hidden',
+                                            ]) !!}
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul class="gender-option data-list floated clearfix">
+                                <li>
+                                    {{ Form::radio('gender', 0, '', [
+                                        'id' => 'gender-male',
+                                        'class' => 'input-radio',
+                                    ]) }}
+                                    {{ Form::label('gender-male', trans('info.male'), [
+                                        'class' => 'label-radio',
+                                    ]) }}
+                                </li>
+                                <li>
+                                    {{ Form::radio('gender', 1, '', [
+                                        'id' => 'gender-female',
+                                        'class' => 'input-radio',
+                                    ]) }}
+                                    {{ Form::label('gender-female', trans('info.female'), [
+                                        'class' => 'label-radio',
+                                    ]) }}
+                                </li>
+                            </ul>
                         </div>
-                    </div>
-                </div>
-                <div>
-                    <div class="ct-info row">
-                        <div class="col-md-1">
-                            {{ trans('info.gender') }}
-                        </div>
-                        <div class="col-md-4 col-radio">
-                            <div>
-                                {{ Form::radio('gender','', '', ['id' => "male"]) }}
-                                <label for="male">
-                                    {{ trans('info.male') }}
-                                </label>
+                         <div class="row">
+                            <div class="col-md-6 col-md-offset-3">
+                                @if (
+                                    $errors->has('email') ||
+                                    $errors->has('password') ||
+                                    $errors->has('password_confirmation') ||
+                                    $errors->has('name') ||
+                                    $errors->has('image')
+                                )
+                                    <div class="alert alert-warning warning-login-register">
+                                        <p>{{ $errors->first('email') }}</p>
+                                        <p>{{ $errors->first('password') }}</p>
+                                        <p>{{ $errors->first('password_confirmation') }}</p>
+                                        <p>{{ $errors->first('name') }}</p>
+                                        <p>{{ $errors->first('image') }}</p>
+                                    </div>
+                                @endif
                             </div>
-                            <div class="col-female">
-                                {{ Form::radio('gender','', '', ['id' => "female"]) }}
-                                <label for="female">
-                                   {{ trans('info.female') }}
-                                </label>
-                            </div>
-                            <div class="clear"></div>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div class="ct-info row">
-                        <div class="col-md-1">
-                            {{ trans('info.phone') }}
-                        </div>
-                        <div class="col-md-4">
-                            {!! Form::text('phone', Auth::user()->phone, [
-                                'placeholder' => trans('info.phone'),
-                            ]) !!}
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div class="ct-info row">
-                        <div class="col-md-1">
-                            {{ trans('info.address') }}
-                        </div>
-                        <div class="col-md-4">
-                            {!! Form::text('phone', Auth::user()->address, [
-                                'placeholder' => trans('info.address'),
-                            ]) !!}
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div class="info-last ct-info row">
-                        <div class="col-md-4 col-md-offset-1">
-                            <input type="submit" name="" value="update">
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    {{ Form::close() }}
-@endsection
-@section('content-bot')
-    <div class="inner">
-        <h2>{{ trans('home.wellcome') }}, {{ Auth::user()->name }}</h1>
+            <div id="bottom-wizard">
+                {!! Form::submit(trans('user.update'), [
+                    'class' => 'bt-register forward',
+                ]) !!}
+            </div>
+        {!! Form::close() !!}
     </div>
+@endsection
+@section('content-info-web')
+    @include('user.blocks.info-web')
 @endsection

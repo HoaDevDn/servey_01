@@ -1,5 +1,5 @@
-<?php echo Form::text("answer[$idQuestion][$idAnswer]", '', [
-    'class' => 'input-radio input' . $idQuestion,
+<?php echo Form::textarea("answer[$idQuestion][$idAnswer]", '', [
+    'class' => 'animated zoomIn form-control input' . $idQuestion,
     'required' => true,
 ]); ?>
 
