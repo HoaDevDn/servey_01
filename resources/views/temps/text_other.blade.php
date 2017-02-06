@@ -1,4 +1,4 @@
-{!! Form::text("answer[$idQuestion][$idAnswer]", '', [
-    'class' => 'input-radio input' . $idQuestion,
+{!! Form::textarea("answer[$idQuestion][$idAnswer]", '', [
+    'class' => 'animated zoomIn form-control input' . $idQuestion,
     'required' => true,
 ]) !!}

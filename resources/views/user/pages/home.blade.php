@@ -1,78 +1,54 @@
 @extends('user.master')
 @section('content')
-    <div class="list container">
-        <div>
-            <h1>{{ trans('home.list_survey') }}</h1>
-        </div>
-        <div class = "alert-message">
-            @if (Session::get('message'))
-                <div class= "alert alert-warning">
-                    <span>
-                        <p>
-                            {{ Session::get('message') }}
-                        </p>
-                    </span>
+    <div id="survey_container" class="survey_container animated zoomIn wizard" novalidate="novalidate">
+        <div id="top-wizard">
+            <strong>{{ trans('home.progress') }}<span id="location"></span></strong>
+            <div class="ui-progressbar ui-widget ui-widget-content ui-corner-all"
+                id="progressbar"
+                role="progressbar"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-valuenow="0">
+                <div class="ui-progressbar-value ui-widget-header ui-corner-left">
                 </div>
-            @endif
-        </div>
-        <div class="content-table">
-            <div class="">
-                <h2>{{ trans('home.table') }}</h2>
-                <p></p>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>{{ trans('home.no') }}.</th>
-                            <th>
-                                <span class="glyphicon glyphicon-list"></span>
-                                {{ trans('home.survey') }}
-                            </th>
-                            <th>
-                                <span class="glyphicon glyphicon-user"></span>
-                                {{ trans('home.owned_by') }}
-                            </th>
-                            <th>
-                                <span class="glyphicon glyphicon-calendar"></span>
-                                {{ trans('home.date') }}
-                            </th>
-                            <th>
-                                <span class="glyphicon glyphicon-remove-sign"></span>
-                                {{ trans('home.delete') }}
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($surveys as  $key => $survey)
-                            <tr class="row-tr{{ $survey->id }}">
-                                <td>{{ ++$key }}</td>
-                                <td>
-                                    <a href="{{ action('User\SurveyController@answerSurvey', $survey->id) }}">
-                                        {{ $survey->title }}
-                                    </a>
-                                </td>
-                                <td>
-                                    @if ($survey->feature == 1 && $survey->user_id != Auth::user()->id)
-                                        {{ $survey->user->name }}
-                                    @else
-                                        {{ trans('home.me') }}
-                                    @endif
-                                </td>
-                                <td>{{ trans('home.date') }}</td>
-                                <td>
-                                    <a class="delete-survey" id-survey="{{ $survey->id }}">
-                                        {{ trans('home.remove') }}
-                                    </a>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="5">{{ trans('survey.dont_have') }}</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
             </div>
+            <div class="shadow"></div>
         </div>
-        {{ $surveys->render() }}
+        {!! Form::open([
+            'id' => 'wrapped',
+            'class' => 'wizard-form',
+            'action' => 'SurveyController@create',
+            'novalidate' => 'novalidate',
+        ]) !!}
+            <div id="middle-wizard" class="wizard-branch wizard-wrapper">
+                @if (Session::has('message'))
+                    <div class="alert alert-info alert-message">
+                        {{ Session::get('message') }}
+                    </div>
+                @endif
+                @if (Session::has('message-fail'))
+                    <div class="alert alert-danger alert-message">
+                        {{ Session::get('message-fail') }}
+                    </div>
+                @endif
+                @include('user.steps.step-infor')
+                @include('user.steps.step-create-survey')
+                @include('user.steps.step-send-mail')
+                @include('user.steps.step-finish')
+            </div>
+            <div id="bottom-wizard">
+                {!! Form::button(trans('home.backward'), [
+                    'class' => 'backward',
+                    'disabled' => 'disabled',
+                ]) !!}
+                {!! Form::button(trans('home.forward'), [
+                    'class' => 'forward ',
+                    'disabled' => 'disabled',
+                ]) !!}
+            </div>
+        {!! Form::close() !!}
     </div>
+@endsection
+@section('content-info-web')
+    @include('user.blocks.info-web')
 @endsection

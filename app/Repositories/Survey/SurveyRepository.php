@@ -47,35 +47,55 @@ class SurveyRepository extends BaseRepository implements SurveyInterface
         }
     }
 
-    public function resultSurvey($surveyId)
+    public function getResutlSurvey($token)
     {
-        $survey = $this->find($surveyId);
-        $datasInput = $this->inviteRepository->getResult($surveyId);
+        $survey = $this->where('token', $token)->first();
+
+        if (!$survey) {
+            return view('errors.503');
+        }
+
+        $datasInput = $this->inviteRepository->getResult($survey->id);
         $questions = $datasInput['questions'];
         $temp = [];
         $results = [];
 
-        foreach ($questions as $key => $question) {
-            $answers = $datasInput['answers']->where('question_id', $question->id)->pluck('id')->toArray();
-            $temp[] = [
-                'answers' => $answers,
-                'question_id' => $question->id,
-            ];
+        if (empty($datasInput['results']->toArray())) {
+
+            return $results = false;
         }
 
-        foreach ($temp as $array) {
-            foreach ($array['answers'] as $key => $value) {
-                $answerResult = $datasInput['results']->whereIn('answer_id', $value)->pluck('id')->toArray();
-                $total = $datasInput['results']->whereIn('answer_id', $array['answers'])->pluck('id')->toArray();
-                $results[] = [
-                    'content_id' => $value,
-                    'question_id' => $array['question_id'],
-                    'percent' => (double)(count($answerResult)*100)/(count($total)),
+        foreach ($questions as $key => $question) {
+            $answers = $datasInput['answers']->where('question_id', $question->id);
+
+            foreach ($answers as $answer) {
+                $total = $datasInput['results']
+                    ->whereIn('answer_id', $answers->pluck('id')
+                        ->toArray())
+                    ->pluck('id')
+                    ->toArray();
+                $answerResult = $datasInput['results']
+                    ->whereIn('answer_id', $answer->id)
+                    ->pluck('id')
+                    ->toArray();
+                $temp[] = [
+                    'answerId' => $answer->id,
+                    'content' => ($answer->type == config('survey.type_time')
+                        || $answer->type == config('survey.type_text')
+                        || $answer->type == config('survey.type_date'))
+                        ? $datasInput['results']
+                        ->whereIn('answer_id', $answer->id)
+                        : $answer->content,
+                    'percent' => (count($total) > 0) ? (double)(count($answerResult)*100)/(count($total)) : 0,
                 ];
             }
+            $results[] = [
+                'question' => $question,
+                'answers' => $temp,
+            ];
+            $temp = [];
         }
 
-        // return $results;
-        dd($results);
+        return $results;
     }
 }

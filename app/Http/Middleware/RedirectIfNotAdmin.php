@@ -16,10 +16,11 @@ class RedirectIfNotAdmin
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->isAdmin()) {
+        if (Auth::check() && ( Auth::user()->isAdmin() || Auth::user()->isSupperAdmin())) {
             return $next($request);
         }
 
-        return redirect()->action('Auth\LoginController@getLogin')->with('message', trans('message.permission'));
+        return redirect()->action('SurveyController@index')
+            ->with('message', trans('message.permission'));
     }
 }

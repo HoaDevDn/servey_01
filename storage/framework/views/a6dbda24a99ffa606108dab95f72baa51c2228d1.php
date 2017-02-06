@@ -1,63 +1,40 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en" class=" js no-touch csstransforms csstransitions"><!--<![endif]-->
     <head>
-        <title><?php echo e(trans('home.get_survey')); ?>!</title>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title><?php echo e(trans('info.fsurvey')); ?></title>
+        <meta name="description" content="">
+        <meta name="author" content="Ansonika">
         <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
-        <?php echo e(Html::style(elixir('/bower/bootstrap/dist/css/bootstrap.css'))); ?>
-
-        <?php echo e(Html::style(elixir('/user/css/main.css'))); ?>
-
-        <?php echo e(Html::style(elixir('/user/css/home.css'))); ?>
-
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <?php echo $__env->make('library.css-file', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+        <?php echo $__env->make('library.js-file', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
     </head>
     <body>
-        <input type="hidden" data-number="0" class="url-token" ms-error="<?php echo e(trans('home.error')); ?>"/>
-        <!-- Wrapper -->
-        <div id="wrapper">
-        <!-- Header -->
-            <header id="header">
-                <div class="inner">
-                    <!-- Logo -->
-                    <a href="" class="logo">
-                        <span class="symbol">
-                            <?php echo e(Html::image("demo/images/logo.svg")); ?>
-
-                        </span>
-                        <span class="title"><?php echo e(trans('home.survey')); ?></span>
-                    </a>
-                    <!-- Nav -->
-                    <nav>
-                        <ul>
-                            <li><a href="#menu"><?php echo e(trans('home.menu')); ?></a></li>
-                        </ul>
-                    </nav>
+        <?php echo $__env->make('user.blocks.popup-send-mail', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+        <input type="hidden" class="data"
+            data-number="<?php echo e(config('temp.data_number')); ?>"
+            data-question="<?php echo e(config('temp.data_question')); ?>"
+            data-error="<?php echo e(trans('home.error')); ?>"
+            data-confirm="<?php echo e(trans('temp.confirm')); ?>"
+            data-email-invalid="<?php echo e(trans('temp.email_invalid')); ?>"
+            data-link="<?php echo e(action('SurveyController@autocomplete')); ?>"
+        />
+        <section id="top-area">
+            <?php echo $__env->make('user.blocks.menu', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+            <div class="container animated slideInDown">
+                 <div class="row">
+                     <div class="col-md-12 main-title">
+                        <h1>Satisfaction survey</h1>
+                        <p>Help everyone to improve our service and customer satisfaction.</p>
+                    </div>
                 </div>
-            </header>
-        <!-- Menu -->
-                <?php echo $__env->make('user.blocks.menu', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-        <!-- Main -->
-            <div id="main">
-                <?php echo $__env->yieldContent('content'); ?>
             </div>
-        <!-- Footer -->
-            <footer id="footer">
-                <?php echo $__env->yieldContent('content-bot'); ?>
-            </footer>
-        </div>
-        <!-- Scripts -->
-        <?php echo e(Html::script(elixir('/user/js/jquery.min.js'))); ?>
-
-        <?php echo e(Html::script(elixir('/user/js/skel.min.js'))); ?>
-
-        <?php echo e(Html::script(elixir('/user/js/util.js'))); ?>
-
-        <?php echo e(Html::script(elixir('/user/js/main.js'))); ?>
-
-        <?php echo e(Html::script(elixir('/user/js/question.js'))); ?>
-
-        <?php echo e(Html::script(elixir('/js/app.js'))); ?>
-
+        </section>
+        <section class="container" id="main">
+            <?php echo $__env->yieldContent('content'); ?>
+            <?php echo $__env->yieldContent('content-info-web'); ?>
+        </section>
+        <?php echo $__env->make('user.blocks.footer', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
     </body>
 </html>

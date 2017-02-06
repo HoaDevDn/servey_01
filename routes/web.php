@@ -11,22 +11,21 @@
 |
 */
 
-Route::get('/login-page', function () {
-    return view('user.login');
-});
 
 Auth::routes();
 
 Route::group(['prefix' => '/', 'middleware' => 'guest'], function () {
 
-    Route::get('/register', 'User\SurveyController@register');
+    Route::get('/', 'Auth\LoginController@getLogin');
+
+    Route::get('/register', 'Auth\RegisterController@getRegister');
 
     Route::post('/register', [
         'as' => 'register-user',
         'uses' => 'Auth\RegisterController@register',
     ]);
 
-    Route::get('/login', 'User\SurveyController@getHome');
+    Route::get('/login', 'Auth\LoginController@getLogin');
 
     Route::post('/login', [
         'as' => 'login-user',
@@ -38,9 +37,23 @@ Route::group(['prefix' => '/', 'middleware' => 'guest'], function () {
     Route::get('/callback/{provider}', 'User\SocialAuthController@callback');
 });
 
+Route::get('/', 'SurveyController@index');
+
 Route::get('/logout', 'Auth\LoginController@logout');
 
-Route::get('/home', 'User\SurveyController@getHome');
+
+Route::group(['prefix' => '/supper-admin', 'middleware' => 'supperadmin'], function () {
+
+    Route::resource('/request', 'Admin\RequestController', [
+        'only' => [
+            'index',
+        ],
+    ]);
+
+    Route::post('/request/update/{id}', 'Admin\RequestController@update');
+
+    Route::post('/request/delete', 'Admin\RequestController@destroy');
+});
 
 Route::group(['prefix' => '/admin', 'middleware' => 'admin'], function () {
 
@@ -61,55 +74,49 @@ Route::group(['prefix' => '/admin', 'middleware' => 'admin'], function () {
     Route::post('/change-status-user/{status}', 'Admin\UserController@changeStatus');
 
     Route::get('/search', 'Admin\UserController@search');
+
+    Route::resource('/request', 'Admin\RequestController', ['only' => 'store']);
+
+    Route::post('/request/cancel', 'Admin\RequestController@cancel');
 });
 
-Route::group(['prefix' => '/survey', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => '/home', 'middleware' => 'auth'], function () {
 
-    Route::get('/invite/send', 'SurveyController@inviteUser');
+    Route::get('/', 'SurveyController@index');
 
-    Route::get('/invite/{token}', [
-        'as' => 'invite',
-        'uses' => 'SurveyController@answer',
-    ]);
+    Route::post('/invite/send/{id}/{type}', 'SurveyController@inviteUser');
 
-    Route::post('/delete-survey', 'User\SurveyController@delete');
+    Route::post('/delete-survey', 'SurveyController@delete');
 
-    Route::get('/create', 'User\SurveyController@createSurvey');
+    Route::post('/mark-survey', 'User\LikeController@markLike');
 
-    Route::post('radio-answer', 'User\SurveyController@radioAnswer');
+    Route::get('/list-invited', 'SurveyController@getInviteSurvey');
 
-    Route::post('other-radio', 'User\SurveyController@otherRadio');
+    Route::get('/survey-individual', 'SurveyController@listSurveyUser');
 
-    Route::post('checkbox-answer', 'User\SurveyController@checkboxAnswer');
+    Route::get('/user/detail', 'User\UserController@show');
 
-    Route::post('other-checkbox', 'User\SurveyController@otherCheckbox');
+    Route::put('/user/update', 'User\UserController@update');
 
-    Route::post('radio-question', 'User\SurveyController@radioQuestion');
+    Route::get('explore/{token}/{type}', 'User\ExcelController@explore');
 
-    Route::post('checkbox-question', 'User\SurveyController@checkboxQuestion');
-
-    Route::post('short-question', 'User\SurveyController@shortQuestion');
-
-    Route::post('long-question', 'User\SurveyController@longQuestion');
-
-    Route::post('/create', [
-        'as' => 'create',
-        'uses' => 'User\SurveyController@create',
-    ]);
-
-    Route::post('/invite-user', 'User\MailController@sendMail');
-
-    Route::get('/invite-user', 'User\MailController@index');
-
-    Route::get('/survey-private', 'User\SurveyController@listSurveyUser');
-
-    Route::get('/view/chart/{id}', 'User\SurveyController@viewResult');
+    Route::get('/survey-private/{token}', 'AnswerController@answerPrivate');
 });
 
-Route::post('/text-other', 'User\SurveyController@textOther');
+Route::post('/add-temp/{type}', 'TempController@addTemp');
 
-Route::get('/survey/answer/{id}', 'User\SurveyController@answerSurvey');
+Route::post('/create', [
+    'as' => 'create',
+    'uses' => 'SurveyController@create',
+]);
 
-Route::post('/survey/result/{id}', 'User\ResultController@result');
+Route::post('/survey/result/{token}', 'User\ResultController@result');
 
-Route::get('/chart', 'User\ChartController@index');
+Route::get('/autocomplete', 'SurveyController@autocomplete');
+
+Route::post('/search', 'SurveyController@search');
+
+Route::get('/survey-public/{token}', 'AnswerController@answerPublic');
+
+Route::get('/show/{token}', 'SurveyController@showDetail');
+

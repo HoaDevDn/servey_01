@@ -5,7 +5,7 @@
         <div class="div-text-answer">
             <?php echo Form::text("txt-question[answers][$number][][" . config('survey.type_radio') . "]", '', [
                 'placeholder' => trans('home.enter_answer_here'),
-                'required' => true
+                'required' => true,
             ]); ?>
 
         </div>

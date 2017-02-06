@@ -1,7 +1,7 @@
 <?php
 
 return [
-
+    'image_system' => '/library/images/',
     'image_default' => 'questionDefault.png',
     'image_path' => 'image/',
     'survey' => [
@@ -25,4 +25,16 @@ return [
     ],
     'feature' => 1,
     'not_feature' => 0,
+    'mark' => 1,
+    'unmark' => 0,
+    'google' => 'google',
+    'replace' => 'survey/result/',
+    'required' => [
+        'true' => 1,
+        'false' => 0,
+    ],
+    'return' => [
+        'bool' => 0,
+        'view' => 1,
+    ],
 ];

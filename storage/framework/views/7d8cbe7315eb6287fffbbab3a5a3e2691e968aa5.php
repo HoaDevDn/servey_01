@@ -1,36 +1,68 @@
-<nav id="menu">
-    <h2><?php echo e(trans('home.menu')); ?></h2>
-    <ul>
-        <?php if(Auth::check()): ?>
-            <li>
-                <?php echo Html::image(Auth::user()->image); ?>
+<header>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-xs-3" id="logo">
+                <a href="<?php echo e(action('SurveyController@index')); ?>"></a>
+            </div>
+            <nav class="col-md-8 col-xs-9" id="top-nav">
+                <ul>
+                    <?php if(!Auth::guard()->check()): ?>
+                        <li>
+                            <a href="<?php echo e(action('Auth\LoginController@getLogin')); ?>">
+                                <span class="glyphicon glyphicon-log-in span-menu">
+                                </span>
+                                <?php echo e(trans('login.login')); ?>
 
-                <span>
-                    <?php echo e(Auth::user()->name); ?>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<?php echo e(action('Auth\RegisterController@getRegister')); ?>">
+                                <span class="glyphicon glyphicon-registration-mark span-menu">
+                                </span>
+                                <?php echo e(trans('login.register')); ?>
 
-                </span>
-            </li>
-        <?php endif; ?>
-        <li>
-            <a href="<?php echo e(action('User\SurveyController@getHome')); ?>">
-                <?php echo e(trans('home.home')); ?>
+                            </a>
+                        </li>
+                    <?php else: ?>
+                        <li>
+                            <a href="<?php echo e(action('SurveyController@index')); ?>">
+                                <span class="glyphicon glyphicon-home">
+                                </span>
+                                <?php echo e(trans('home.home')); ?>
 
-            </a>
-        </li>
-        <li><a href=""><?php echo e(trans('home.profile')); ?></a></li>
-        <li>
-            <a href="<?php echo e(action('User\SurveyController@create')); ?>">
-                <?php echo e(trans('home.create_survey')); ?>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<?php echo e(action('SurveyController@listSurveyUser')); ?>">
+                                <span class="glyphicon glyphicon-th">
+                                </span>
+                                <?php echo e(trans('home.list_survey')); ?>
 
-            </a>
-        </li>
-        <li><a href=""><?php echo e(trans('home.update_info')); ?></a></li>
-        <li><a href=""><?php echo e(trans('home.history')); ?></a></li>
-        <li><a href="<?php echo e((Auth::check()) ?
-                action('Auth\LoginController@logout') : action('Auth\LoginController@login')); ?>">
-               <?php echo e((Auth::check()) ? trans('home.logout') : trans('home.login')); ?>
+                            </a>
+                        </li>
+                        <li>
+                        <span>
+                            <?php echo Html::image(Auth::user()->image, '', [
+                                'class' => 'image-avatar',
+                            ]); ?>
 
-            </a>
-        </li>
-    </ul>
-</nav>
+                         </span>
+                            <a href="<?php echo e(action('User\UserController@show')); ?>">
+                                <?php echo e(Auth::user()->getName()); ?>
+
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<?php echo e(action('Auth\LoginController@logout')); ?>">
+                                <span class="glyphicon glyphicon-log-out">
+                                </span>
+                                <?php echo e(trans('login.logout')); ?>
+
+                            </a>
+                        </li>
+                    <?php endif; ?>
+                </ul>
+            </nav>
+        </div>
+     </div>
+</header>

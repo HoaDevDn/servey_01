@@ -104,6 +104,11 @@ class User extends Authenticatable
         return $this->level == config('users.level.admin');
     }
 
+    public function isSupperAdmin()
+    {
+        return $this->level == config('users.level.supperadmin');
+    }
+
     public function isActive()
     {
         return $this->status == config('users.status.active');
@@ -112,5 +117,24 @@ class User extends Authenticatable
     public function setGenderAttribute($value)
     {
         $this->attributes['gender'] = $value ?: config('users.gender.male');
+    }
+
+    public function requestAdmin()
+    {
+        return $this->hasMany(Request::class, 'admin_id');
+    }
+
+    public function requestMember()
+    {
+        return $this->hasOne(Request::class, 'member_id');
+    }
+
+    public function getName()
+    {
+        if (strlen($this->attributes['name']) > 14) {
+            return substr($this->attributes['name'], 0, 11) . ' ...';
+        }
+
+        return $this->attributes['name'];
     }
 }

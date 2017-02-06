@@ -45,13 +45,24 @@ class QuestionRepository extends BaseRepository implements QuestionInterface
         }
     }
 
-    public function createMultiQuestion($survey, $questions, $answers)
+    public function createMultiQuestion($survey, $questions, $answers, $required = null)
     {
         $questionsAdd = [];
         $answersAdd = [];
 
-        foreach ($questions as $value) {
-            if (!strlen($value)) {
+        if (!empty(array_diff(array_keys($questions), array_keys($answers)))) {
+            $check = array_keys($answers);
+
+            foreach (array_keys($questions) as $key => $value) {
+                if ($value != $check[$key]) {
+                    return false;
+                }
+            }
+        }
+
+        foreach ($questions as $key => $value) {
+
+            if (!strlen($value) && $questions) {
                 $value = config('survey.question_default');
             }
 
@@ -59,7 +70,7 @@ class QuestionRepository extends BaseRepository implements QuestionInterface
                 'content' => $value,
                 'survey_id' => $survey,
                 'image' => config('survey.image_default'),
-                'required' => true,
+                'required' => (!empty($required) && in_array($key, $required)) ? false : true,
             ];
         }
 
@@ -72,10 +83,20 @@ class QuestionRepository extends BaseRepository implements QuestionInterface
             foreach (array_keys($questions) as $number => $index) {
                 foreach ($answers[$index] as $key => $value) {
                     $type = array_keys($value)[0];
-                    $temp = $value[$type];
 
-                    if (!strlen($temp)) {
-                        $temp  = config('survey.question_default');
+                    switch ($type) {
+                        case config('survey.type_other_radio'): case config('survey.type_other_checkbox'):
+                            $temp = trans('temp.other');
+                            break;
+                        case config('survey.type_text'):
+                            $temp = trans('temp.text');
+                            break;
+                        case config('survey.type_time'):
+                            $temp = trans('temp.time');
+                            break;
+                        default:
+                            $temp = $value[$type];
+                            break;
                     }
 
                     $answersAdd[] = [

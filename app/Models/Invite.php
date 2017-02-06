@@ -10,6 +10,9 @@ class Invite extends Model
         'sender_id',
         'recevier_id',
         'survey_id',
+        'mail',
+        'number_answer',
+        'status',
     ];
 
     public function sender()
@@ -25,5 +28,15 @@ class Invite extends Model
     public function survey()
     {
         return $this->belongsTo(Survey::class);
+    }
+
+    public function setNumberAnswerAttribute($value)
+    {
+        $this->attributes['number_answer'] = is_numeric($value) ? $value : null;
+    }
+
+    public function getNumberAnswerAttribute()
+    {
+        return $this->attributes['number_answer'];
     }
 }
