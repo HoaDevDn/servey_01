@@ -51,13 +51,13 @@
                 'class' => 'add-checkbox',
                 'id-as' => $number,
                 'typeId' => config('survey.type_checkbox'),
-                'url' => action('User\SurveyController@checkboxAnswer'),
+                'url' => action('SurveyController@checkboxAnswer'),
             ]) !!}
         </div>
         <div class="col-md-4">
             {!! Form::button(trans('home.add_other'), [
                 'class' => 'add-checkbox-other other' . $number,
-                'url' => action('User\SurveyController@otherCheckbox'),
+                'url' => action('SurveyController@otherCheckbox'),
                 'typeId' => config('survey.type_other_checbox'),
             ]) !!}
         </div>

@@ -7,6 +7,7 @@ use App\Repositories\Answer\AnswerInterface;
 use App\Repositories\Result\ResultInterface;
 use App\Repositories\Question\QuestionInterface;
 use App\Models\Invite;
+use App\Repositories\User\UserInterface;
 use DB;
 use Exception;
 
@@ -15,17 +16,20 @@ class InviteRepository extends BaseRepository implements InviteInterface
     protected $answerRepository;
     protected $resultRepository;
     protected $questionRepository;
+    protected $userRepository;
 
     public function __construct(
         Invite $invite,
-        AnswerInterface $answer,
-        ResultInterface $result,
-        QuestionInterface $question
+        AnswerInterface $answerRepository,
+        ResultInterface $resultRepository,
+        QuestionInterface $questionRepository,
+        UserInterface $userRepository
     ) {
         parent::__construct($invite);
-        $this->answerRepository = $answer;
-        $this->resultRepository = $result;
-        $this->questionRepository = $question;
+        $this->answerRepository = $answerRepository;
+        $this->resultRepository = $resultRepository;
+        $this->questionRepository = $questionRepository;
+        $this->userRepository = $userRepository;
     }
 
     public function deleteBySurveyId($surveyId)
@@ -72,9 +76,67 @@ class InviteRepository extends BaseRepository implements InviteInterface
         $charts['answers'] = $answers = $this->answerRepository
             ->whereIn('question_id', $questions->pluck('id')->toArray())
             ->get();
-        $charts['results'] = $results = $this->resultRepository->whereIn('answer_id',
-            $answers->pluck('id')->toArray())->get();
+        $charts['results'] = $results = $this->resultRepository
+            ->whereIn('answer_id',$answers->pluck('id')->toArray())
+            ->get();
 
         return $charts;
+    }
+
+    public function invite($senderId, array $recevier, $surveyId)
+    {
+        DB::beginTransaction();
+        try {
+            $usersAvailable = $this->userRepository->whereIn('email', $recevier)->lists('email', 'id');
+            $inputsAvailable = [];
+
+            foreach ($usersAvailable as $id => $email) {
+                $inputsAvailable[] = [
+                    'sender_id' => $senderId,
+                    'recevier_id' => $id,
+                    'survey_id' => $surveyId,
+                ];
+            }
+
+            $users = array_diff($recevier, $usersAvailable->toArray());
+            $inputsUser = [];
+
+            foreach ($users as $user) {
+                $inputsUser[] = [
+                    'sender_id' => $senderId,
+                    'survey_id' => $surveyId,
+                    'mail' => $user,
+                ];
+            }
+
+            if ($this->multiCreate($inputsUser) && $this->multiCreate($inputsAvailable)) {
+                DB::commit();
+
+                return true;
+            }
+        } catch (Exception $e) {
+            DB::rollback();
+
+            return false;
+        }
+    }
+
+    public function checkResult($userId, $surveyId)
+    {
+        $questions = $this->questionRepository
+            ->where('survey_id', $surveyId)
+            ->lists('id')
+            ->toArray();
+        $answersId = $this->answerRepository
+            ->whereIn('question_id', $questions)
+            ->lists('id')
+            ->toArray();
+
+        if ($this->resultRepository->where('sender_id', $userId)->whereIn('answer_id', $answersId)->first()) {
+
+            return true;
+        }
+
+        return false;
     }
 }

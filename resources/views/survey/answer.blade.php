@@ -4,7 +4,7 @@
         <div class="title-survey">
             <h1>{{ $surveys->title }}</h1>
         </div>
-        {{ Form::open(['action' => ['User\ResultController@result', $surveys->id]]) }}
+        {{ Form::open(['action' => ['User\ResultController@result', $surveys->token]]) }}
             @foreach($surveys->questions as $key => $question)
                 <div class="row-container-answer">
                     <div>
@@ -49,7 +49,7 @@
                                     </div>
                                     @breakswitch
                                 @case(config('survey.type_other_radio'))
-                                    <div class="container-other row" style="margin-left: -53px;">
+                                    <div class="container-other row">
                                         <div class="col-md-2">
                                             <div class="12u$(small) ct-option">
                                                 {{ Form::radio("answer[$question->id]", $answer->id, '', [
@@ -57,7 +57,7 @@
                                                     'class' => 'option-add',
                                                     'temp-as' => $answer->id,
                                                     'temp-qs' => $question->id,
-                                                    'url' => action('User\SurveyController@textOther'),
+                                                    'url' => action('SurveyController@textOther'),
                                                 ]) }}
                                                 <label for="{{ $key }}-{{ $temp }}">
                                                     {{ trans('home.other') }}
@@ -68,7 +68,7 @@
                                     </div>
                                     @breakswitch
                                 @case(config('survey.type_other_checkbox'))
-                                    <div class="container-other row" style="margin-left: -53px;">
+                                    <div class="container-other row">
                                         <div class="col-md-2">
                                             <div class="12u$(small) ct-option">
                                                 {{ Form::checkbox("answer[$question->id]", $answer->id, '', [
@@ -76,7 +76,7 @@
                                                     'class' => 'option-add',
                                                     'temp-as' => $answer->id,
                                                     'temp-qs' => $question->id,
-                                                    'url' => action('User\SurveyController@textOther'),
+                                                    'url' => action('SurveyController@textOther'),
                                                 ]) }}
                                                 <label for="{{ $key }}-{{ $temp }}">
                                                     {{ trans('home.other') }}
@@ -89,6 +89,11 @@
                             @endswitch
                         @endforeach
                     </div>
+                    @if ($errors->has('answer.' . $question->id))
+                        <div class="alert alert-warning alert-message">
+                            {{ $errors->first('answer.' . $question->id) }}
+                        </div>
+                    @endif
                 </div>
             @endforeach
             <div class="div-submit">

@@ -5,7 +5,7 @@
         <div class="div-text-answer">
             <?php echo Form::text("txt-question[answers][$number][][" . config('survey.type_other_checkbox') . "]", '', [
                 'readonly' => 'true',
-                'placeholder' => trans('home.other')
+                'placeholder' => trans('home.other'),
             ]); ?>
 
         </div>

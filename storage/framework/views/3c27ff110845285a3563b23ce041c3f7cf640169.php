@@ -11,7 +11,7 @@
                     <div class="field half first">
                         <?php echo Form::email('email', '', [
                             'placeholder' => 'Email',
-                            'id' => 'email'
+                            'id' => 'email',
                         ]); ?>
 
                     </div>
@@ -49,7 +49,7 @@
                         <li>
                             <?php echo Form::button('Register', [
                                 'class' => 'bt-register special bt-action',
-                                'url' => action('Auth\RegisterController@register')
+                                'url' => action('Auth\RegisterController@register'),
                             ]); ?>
 
                             <?php echo Form::submit('Login', ['class' => 'special']); ?>
@@ -61,7 +61,7 @@
             </section>
             <?php echo $__env->make('user.blocks.social', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
          <?php else: ?>
-             <h2><?php echo e(trans('home.wellcome')); ?>,<?php echo e(Auth::user()->name); ?></h1>
+            <h2><?php echo e(trans('home.wellcome')); ?>,<?php echo e(Auth::user()->name); ?></h1>
          <?php endif; ?>
     </div>
 <?php $__env->stopSection(); ?>

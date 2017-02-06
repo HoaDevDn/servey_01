@@ -5,12 +5,43 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        {{ Html::style(elixir('/bower/bootstrap-tagsinput/dist/bootstrap-tagsinput.css')) }}
         {{ Html::style(elixir('/bower/bootstrap/dist/css/bootstrap.css')) }}
         {{ Html::style(elixir('/user/css/main.css')) }}
         {{ Html::style(elixir('/user/css/home.css')) }}
+        {{ Html::style(elixir('/bower/font-awesome/css/font-awesome.min.css')) }}
     </head>
     <body>
-        <input type="hidden" data-number="0" class="url-token" ms-error="{{ trans('home.error') }}"/>
+        <div class="popupBackground">
+            <div class="popupCenter">
+                <div class="popupInfo">
+                    <span class="glyphicon glyphicon-remove close" ></span>
+                    <div>
+                        <div>
+                            <span>{{ trans('temp.send_to') }}</span>
+                            {!! Form::text('emails', '', [
+                                'placeholder' => trans('temp.email_name'),
+                                'class' => 'form-emails',
+                                'data-role' => 'tagsinput',
+                            ]) !!}
+                        </div>
+                        <div class="div-send">
+                            {!! Form::submit(trans('temp.send'),  [
+                                'data-url' => action('SurveyController@inviteUser'),
+                                'data-redirect' => action('SurveyController@getHome'),
+                                'class' => 'bt-send',
+                            ]) !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" class="data" data-number="0" data-question="0"
+            data-error="{{ trans('home.error') }}"
+            data-confirm="{{ trans('temp.confirm') }}"
+            data-email-invalid="{{ trans('temp.email_invalid') }}"
+            data-link="{{ action('SurveyController@autocomplete') }}"
+        />
         <!-- Wrapper -->
         <div id="wrapper">
         <!-- Header -->
@@ -19,7 +50,7 @@
                     <!-- Logo -->
                     <a href="" class="logo">
                         <span class="symbol">
-                            {{ Html::image("demo/images/logo.svg") }}
+                            {{ Html::image("/user/images/logo.png") }}
                         </span>
                         <span class="title">{{ trans('home.survey') }}</span>
                     </a>
@@ -43,11 +74,21 @@
             </footer>
         </div>
         <!-- Scripts -->
-        {{ Html::script(elixir('/user/js/jquery.min.js')) }}
+        {{ Html::script(elixir('/bower/highcharts/highcharts.js')) }}
+        {{ Html::script(elixir('/bower/highcharts/highcharts-3d.js')) }}
+        {{ Html::script(elixir('/bower/highcharts/js/modules/exporting.js')) }}
+        {{ Html::script(elixir('/bower/autocomplete/dist/autocomplete.js')) }}
+        {{ Html::script(elixir('/js/app.js')) }}
         {{ Html::script(elixir('/user/js/skel.min.js')) }}
+        {{ Html::script(elixir('/user/js/jquery.min.js')) }}
         {{ Html::script(elixir('/user/js/util.js')) }}
         {{ Html::script(elixir('/user/js/main.js')) }}
         {{ Html::script(elixir('/user/js/question.js')) }}
-        {{ Html::script(elixir('/js/app.js')) }}
+        {{ Html::script(elixir('/user/js/component.js')) }}
+        {{ Html::script(elixir('/bower/angularjs/angular.min.js')) }}
+        {{ Html::script(elixir('/bower/typeahead.js/dist/typeahead.bundle.min.js')) }}
+        {{ Html::script(elixir('/bower/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js')) }}
+        {{ Html::script(elixir('/admin/js/chart.js')) }}
+        {{ Html::script(elixir('/bower/bootstrap3-typeahead/bootstrap3-typeahead.min.js')) }}
     </body>
 </html>

@@ -26,15 +26,19 @@ class UserController extends Controller
         return view('admin.pages.users.list', compact('userActives', 'userBlocks', 'users'));
     }
 
-    public function changeStatus($status, Request $request)
+    public function changeStatus($option, Request $request)
     {
         $userIds = $request->get('checkbox-user-active') ?: $request->get('checkbox-user-block');
 
-        if ($this->userRepository->multiUpdate('id', $userIds, ['status' => $status])) {
+        if ($userIds && $this->userRepository->multiUpdate('id', $userIds, ['status' => $option])) {
+
             return redirect()->action('Admin\UserController@index')->with('message-success', 'admin.update.success');
+        } elseif ($this->userRepository->update($option, ['status' => config('users.status.active')])) {
+
+            return ['success' => true];
         }
 
-        return redirect()->action('Admin\UserContorller@index')->with('message-fail', 'admin.update.fail');
+        return redirect()->action('Admin\UserController@index')->with('message-fail', 'admin.update.fail');
     }
 
     public function show($id)

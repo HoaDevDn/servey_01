@@ -33,7 +33,7 @@
         <div class="col-md-1 div-radius"></div>
         <div class="col-md-9">
             <div class="div-text-answer">
-                {!! Form::text("txt-question[answers][$number][][".config('survey.type_radio')."]", '', [
+                {!! Form::text("txt-question[answers][$number][][" . config('survey.type_radio') . "]", '', [
                     'placeholder' => trans('home.enter_answer_here'),
                     'required' => true,
                 ]) !!}
@@ -51,13 +51,13 @@
                 'class' => 'add-radio',
                 'id-as' => $number,
                 'typeId' => config('survey.type_radio'),
-                'url' => action('User\SurveyController@radioAnswer'),
+                'url' => action('SurveyController@radioAnswer'),
             ]) !!}
         </div>
         <div class="col-md-4">
             {!! Form::button(trans('home.add_other'), [
                 'class' => 'add-radio-other other' . $number,
-                'url' => action('User\SurveyController@otherRadio'),
+                'url' => action('SurveyController@otherRadio'),
                 'typeId' => config('survey.type_other_radio'),
             ]) !!}
         </div>

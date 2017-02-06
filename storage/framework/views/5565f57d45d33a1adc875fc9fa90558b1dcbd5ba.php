@@ -3,7 +3,7 @@
         <div class="title-survey">
             <h1><?php echo e($surveys->title); ?></h1>
         </div>
-        <?php echo e(Form::open(['action' => ['User\ResultController@result', $surveys->id]])); ?>
+        <?php echo e(Form::open(['action' => ['User\ResultController@result', $surveys->token]])); ?>
 
             <?php $__currentLoopData = $surveys->questions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $question): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
                 <div class="row-container-answer">
@@ -56,7 +56,7 @@
                                     </div>
                                     <?php break;
                                 case config('survey.type_other_radio'): ?>
-                                    <div class="container-other row" style="margin-left: -53px;">
+                                    <div class="container-other row">
                                         <div class="col-md-2">
                                             <div class="12u$(small) ct-option">
                                                 <?php echo e(Form::radio("answer[$question->id]", $answer->id, '', [
@@ -64,7 +64,7 @@
                                                     'class' => 'option-add',
                                                     'temp-as' => $answer->id,
                                                     'temp-qs' => $question->id,
-                                                    'url' => action('User\SurveyController@textOther'),
+                                                    'url' => action('SurveyController@textOther'),
                                                 ])); ?>
 
                                                 <label for="<?php echo e($key); ?>-<?php echo e($temp); ?>">
@@ -77,7 +77,7 @@
                                     </div>
                                     <?php break;
                                 case config('survey.type_other_checkbox'): ?>
-                                    <div class="container-other row" style="margin-left: -53px;">
+                                    <div class="container-other row">
                                         <div class="col-md-2">
                                             <div class="12u$(small) ct-option">
                                                 <?php echo e(Form::checkbox("answer[$question->id]", $answer->id, '', [
@@ -85,7 +85,7 @@
                                                     'class' => 'option-add',
                                                     'temp-as' => $answer->id,
                                                     'temp-qs' => $question->id,
-                                                    'url' => action('User\SurveyController@textOther'),
+                                                    'url' => action('SurveyController@textOther'),
                                                 ])); ?>
 
                                                 <label for="<?php echo e($key); ?>-<?php echo e($temp); ?>">
@@ -100,6 +100,12 @@
                             endswitch; ?>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
                     </div>
+                    <?php if($errors->has('answer.' . $question->id)): ?>
+                        <div class="alert alert-warning alert-message">
+                            <?php echo e($errors->first('answer.' . $question->id)); ?>
+
+                        </div>
+                    <?php endif; ?>
                 </div>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
             <div class="div-submit">
