@@ -1,5 +1,8 @@
 <?php $__env->startSection('content'); ?>
     <div class="show-chart inner">
+        <div class="show-chart-result">
+            <h3><?php echo e(trans('temp.result')); ?></h3>
+        </div>
        <?php if(!$status): ?>
             <div class="alert alert-info">
                 <p><?php echo e(trans('temp.dont_have_result')); ?></p>

@@ -3,13 +3,12 @@
         <div class="text-question col-md-10">
             <?php echo Form::text("txt-question[question][$number]", '', [
                 'placeholder' => trans('home.enter_question_here'),
-                'required' => true
+                'required' => true,
             ]); ?>
 
         </div>
         <div class="col-md-2">
             <div class="img-trash">
-                <a class="glyphicon glyphicon-picture"></a>
                 <a class="glyphicon glyphicon-trash col-md-6" id-question="<?php echo e($number); ?>"></a>
             </div>
         </div>
@@ -21,9 +20,9 @@
         </div>
         <div class="col-md-8">
             <div class="text-empty">
-                <?php echo Form::text("txt-question[answers][$number][][". config('survey.type_long')."]", '',[
+                <?php echo Form::text("txt-question[answers][$number][][" . config('survey.type_long') . "]", '',[
                     'placeholder' => trans('temp.long_text'),
-                    'readonly' => true
+                    'readonly' => true,
                 ]); ?>
 
             </div>

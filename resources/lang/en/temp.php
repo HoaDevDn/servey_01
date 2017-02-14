@@ -13,4 +13,5 @@ return [
     'view_result' => 'View result',
     'dont_have_result' => "Don't have any result",
     'email_invalid' => 'Email invalid, check again please',
+    'result' => 'Result',
 ];

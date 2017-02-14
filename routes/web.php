@@ -18,8 +18,9 @@ Route::get('/login-page', function () {
 Auth::routes();
 
 Route::group(['prefix' => '/', 'middleware' => 'guest'], function () {
+    Route::get('/', 'SurveyController@getHome');
 
-    Route::get('/register', 'User\SurveyController@register');
+    Route::get('/register', 'SurveyController@register');
 
     Route::post('/register', [
         'as' => 'register-user',
@@ -86,7 +87,7 @@ Route::group(['prefix' => '/survey', 'middleware' => 'auth'], function () {
 
     Route::get('/invite/{token}', [
         'as' => 'invite',
-        'uses' => 'SurveyController@answer',
+        'uses' => 'SurveyController@show',
     ]);
 
     Route::post('/delete-survey', 'SurveyController@delete');

@@ -77,19 +77,26 @@ class SurveyController extends Controller
 
     public function getInviteSurvey()
     {
+        $surveyIds = [];
         $count = $this->countSurveyAnswered();
         $invites = $this->inviteRepository
             ->where('recevier_id', auth()->id())
             ->orWhere('mail', Auth::user()->email)
             ->distinct('survey_id')
-            ->orderBy('id', 'desc')
-            ->get(['survey_id'])->toArray();
-        $surveys = $this->surveyRepository
-            ->whereIn('id', $invites)
-            ->orderBy('id', 'desc')
-            ->paginate(config('settings.paginate'));
+            // ->orderBy('id', 'desc')
+            ->get(['survey_id'])
+            ->toArray();
 
-        return view('user.pages.home-user', compact('surveys','count'));
+        foreach ($invites as $key => $value) {
+            $surveyIds[] = $value['survey_id'];
+        }
+
+        $surveys = $this->surveyRepository
+            ->whereIn('id', $surveyIds)
+            ->orderBy('id', 'desc')
+            ->paginate(config('settings.paginate'), ['*']);
+
+        return view('user.pages.home-user', compact('surveys', 'count'));
     }
 
     public function search(Request $request)
@@ -355,7 +362,7 @@ class SurveyController extends Controller
                         'senderName' => Auth::user()->name,
                         'email' => Auth::user()->email,
                         'title' => $survey->title,
-                        'link' => action('SurveyController@answer', $survey->token),
+                        'link' => action('SurveyController@show', $survey->token),
                     ]));
 
                     $isSuccess = true;

@@ -2,6 +2,9 @@
 @extends('user.master')
 @section('content')
     <div class="show-chart inner">
+        <div class="show-chart-result">
+            <h3>{{ trans('temp.result') }}</h3>
+        </div>
        @if (!$status)
             <div class="alert alert-info">
                 <p>{{ trans('temp.dont_have_result') }}</p>

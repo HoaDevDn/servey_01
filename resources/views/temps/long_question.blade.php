@@ -8,7 +8,6 @@
         </div>
         <div class="col-md-2">
             <div class="img-trash">
-                <a class="glyphicon glyphicon-picture"></a>
                 <a class="glyphicon glyphicon-trash col-md-6" id-question="{{ $number }}"></a>
             </div>
         </div>

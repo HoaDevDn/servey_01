@@ -27,8 +27,6 @@ class UserController extends Controller
 
     public function update(EditUserRequest $request)
     {
-        // dd( $request->all(),
-        //     $this->userRepository->update(auth()->id(), ['birthday' => null]));
         $isSuccess = false;
         $updateData = $request->only([
             'email',

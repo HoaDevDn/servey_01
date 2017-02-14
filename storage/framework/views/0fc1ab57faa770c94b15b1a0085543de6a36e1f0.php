@@ -30,7 +30,7 @@
 
             </a>
             <a href="<?php echo e(action('SurveyController@getInviteSurvey')); ?>">
-                (<?php echo e($count); ?>)<?php echo e(trans('home.invited')); ?>
+                <?php echo e(trans('home.invited')); ?>
 
             </a>
         </div>

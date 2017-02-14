@@ -24,7 +24,7 @@
                 {{ trans('home.me') }}
             </a>
             <a href="{{ action('SurveyController@getInviteSurvey') }}">
-                ({{ $count }}){{ trans('home.invited') }}
+                {{ trans('home.invited') }}
             </a>
         </div>
     @endif

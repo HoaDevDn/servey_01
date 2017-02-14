@@ -34,7 +34,8 @@ $factory->define(App\Models\Survey::class, function (Faker\Generator $faker) {
     return [
         'user_id' => $faker->randomElement($userIds ?: $userIds = App\Models\User::pluck('id')->toArray()),
         'feature' => $faker->numberBetween(0,1),
-        'title' => $faker->paragraph,
+        'title' => $faker->title,
+        'token' => null,
     ];
 });
 

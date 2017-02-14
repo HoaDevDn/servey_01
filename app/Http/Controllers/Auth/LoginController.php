@@ -57,7 +57,9 @@ class LoginController extends Controller
             'password' => $data['password'],
             'status' => config('users.status.active')
         ])) {
-            if (Auth::user()->level == config('users.level.admin')) {
+            if (Auth::user()->level == config('users.level.admin')
+                || Auth::user()->level == config('users.level.supperadmin')
+            ) {
                 return redirect()->action('Admin\DashboardController@index');
             }
 

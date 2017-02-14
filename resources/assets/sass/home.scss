@@ -234,7 +234,6 @@
                     padding-bottom: 10px;
                     font-weight: bold;
                     &:hover {
-                        background: #53d6af;
                         color: white;
                     }
                 }
@@ -572,6 +571,7 @@
 }
 
 .choose-link {
+    margin-bottom: 20px;
     >a {
         border: 1px solid gray;
         padding: 5px 15px;
@@ -862,13 +862,14 @@
 .show-chart {
     width: 660px !important;
     padding: 0px;
+    padding-bottom: 20px !important;
     box-shadow: 5px 5px 5px #baddc6;
     -moz-box-shadow: 5px 5px 5px #baddc6;
     -webkit-box-shadow: 0px 0px 5px 5px #baddc6;
-
     border-top: 1px solid #baddc6;
     border-left: 1px solid #baddc6;
     margin-top: 20px;
+
 }
 
 #container-chart {
@@ -904,4 +905,9 @@
 #frm-birthday {
     border: 0px;
     border-bottom: 1px solid #becad6;
+}
+
+.show-chart-result {
+    margin-top: 30px;
+    text-align: center;
 }

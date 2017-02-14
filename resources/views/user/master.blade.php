@@ -3,6 +3,7 @@
     <head>
         <title>{{ trans('home.get_survey') }}!</title>
         <meta charset="utf-8" />
+        <link rel="icon" href="http://stc.laban.vn/v5/images/laban_share_icon.png" type="image/x-icon" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="csrf-token" content="{{ csrf_token() }}">
         {{ Html::style(elixir('/bower/bootstrap-tagsinput/dist/bootstrap-tagsinput.css')) }}
@@ -74,11 +75,11 @@
             </footer>
         </div>
         <!-- Scripts -->
+        {{ Html::script(elixir('/js/app.js')) }}
         {{ Html::script(elixir('/bower/highcharts/highcharts.js')) }}
         {{ Html::script(elixir('/bower/highcharts/highcharts-3d.js')) }}
         {{ Html::script(elixir('/bower/highcharts/js/modules/exporting.js')) }}
-        {{ Html::script(elixir('/bower/autocomplete/dist/autocomplete.js')) }}
-        {{ Html::script(elixir('/js/app.js')) }}
+        {{ Html::script(elixir('/bower/jquery/dist/jquery.js')) }}
         {{ Html::script(elixir('/user/js/skel.min.js')) }}
         {{ Html::script(elixir('/user/js/jquery.min.js')) }}
         {{ Html::script(elixir('/user/js/util.js')) }}
@@ -90,10 +91,6 @@
         {{ Html::script(elixir('/bower/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js')) }}
         {{ Html::script(elixir('/admin/js/chart.js')) }}
         {{ Html::script(elixir('/bower/bootstrap3-typeahead/bootstrap3-typeahead.min.js')) }}
-<!--         <script src="https://code.highcharts.com/highcharts.js"></script>
-        <script src="https://code.highcharts.com/highcharts-3d.js"></script>
-        <script src="https://code.highcharts.com/modules/exporting.js"></script> -->
-    <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script> -->
-
+        {{ Html::script(elixir('/bower/autocomplete/dist/autocomplete.js')) }}
     </body>
 </html>
