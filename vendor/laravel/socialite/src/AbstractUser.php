@@ -1,10 +1,11 @@
-<?php namespace Laravel\Socialite;
+<?php
+
+namespace Laravel\Socialite;
 
 use ArrayAccess;
 
 abstract class AbstractUser implements ArrayAccess, Contracts\User
 {
-
     /**
      * The unique identifier for the user.
      *
@@ -39,6 +40,13 @@ abstract class AbstractUser implements ArrayAccess, Contracts\User
      * @var string
      */
     public $avatar;
+
+    /**
+     * The user's raw attributes.
+     *
+     * @var array
+     */
+    public $user;
 
     /**
      * Get the unique identifier for the user.
@@ -91,6 +99,16 @@ abstract class AbstractUser implements ArrayAccess, Contracts\User
     }
 
     /**
+     * Get the raw user array.
+     *
+     * @return array
+     */
+    public function getRaw()
+    {
+        return $this->user;
+    }
+
+    /**
      * Set the raw user array from the provider.
      *
      * @param  array  $user
@@ -122,6 +140,7 @@ abstract class AbstractUser implements ArrayAccess, Contracts\User
      * Determine if the given raw user attribute exists.
      *
      * @param  string  $offset
+     * @return bool
      */
     public function offsetExists($offset)
     {
