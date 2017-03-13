@@ -37,7 +37,7 @@ class SendMail implements ShouldQueue
         $linkManage = '';
         $view = 'emails.email_invite';
 
-        if ($this->type == 'manage') {
+        if ($this->type == 'mailManage') {
             $view = 'emails.email_manage';
             $linkManage = action('AnswerController@show', [
                 'token' =>  $this->inputs['token_manage'],
