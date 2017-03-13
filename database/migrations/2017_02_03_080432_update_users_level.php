@@ -14,7 +14,8 @@ class UpdateUsersLevel extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('level')->change();
+            $table->dropColumn('level');
+            $table->integer('level');
         });
     }
 
@@ -26,7 +27,7 @@ class UpdateUsersLevel extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->boolean('level')->change();
+            $table->boolean('level');
         });
     }
 }
