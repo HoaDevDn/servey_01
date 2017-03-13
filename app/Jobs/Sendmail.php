@@ -34,6 +34,10 @@ class SendMail implements ShouldQueue
                 'token' => $this->inputs['token'],
         ]);
 
+        if ($this->type == 'user') {
+            dd($this->inputs);
+        }
+
         $linkManage = '';
         $view = 'emails.email_invite';
 
