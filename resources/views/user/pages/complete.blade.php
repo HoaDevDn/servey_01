@@ -31,7 +31,7 @@
                                 data-mobile-iframe="true">
                                 <a class="fb-xfbml-parse-ignore" target="_blank" href="{{
                                 action('AnswerController@answerPublic', $token) }}">
-                                    {{ trans('survey.share') }}sdsadsd
+                                    {{ trans('survey.share') }}
                                 </a>
                             </div>
                         @endif
@@ -45,11 +45,9 @@
                         <p>{{ trans('home.admin_link') }}</p>
                         <a href="{{ action('AnswerController@show', [
                             'token' => $tokenManage,
-                            'type' => $feature,
                         ]) }}">
                             {{ action('AnswerController@show', [
                                 'token' => $tokenManage,
-                                'type' => $feature,
                             ]) }}
                         </a>
                 </div>

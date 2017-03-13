@@ -71,6 +71,7 @@ class AnswerController extends Controller
             ->first();
 
         if (!$survey || ($survey->feature != $isPublic)) {
+            dd($survey, $survey->feature != $isPublic);
             return view('errors.404');
         }
 
