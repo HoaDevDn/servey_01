@@ -28,7 +28,6 @@ class SendMail implements ShouldQueue
 
     public function handle()
     {
-        dd($this->inputs);
         $link = action($this->inputs['feature']
             ? 'AnswerController@answerPublic'
             : 'AnswerController@answerPrivate', [
