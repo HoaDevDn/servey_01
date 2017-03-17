@@ -129,15 +129,15 @@
                 </li>
             @endforeach
         </ul>
-            @if ($errors->has('answer.' . $question->id))
-                <div class="alert alert-danger alert-message">
-                    {{ $errors->first('answer.' . $question->id) }}
-                </div>
-            @endif
-            @if ($errors->has('answer.' . $question->id . '.' . $question->answers[0]->id))
-                <div class="alert alert-danger alert-message">
-                    {{ $errors->first('answer.' . $question->id . '.' . $question->answers[0]->id) }}
-                </div>
-            @endif
+        @if ($errors->has('answer.' . $question->id))
+            <div class="alert alert-danger alert-message">
+                {{ $errors->first('answer.' . $question->id) }}
+            </div>
+        @endif
+        @if ($errors->has('answer.' . $question->id . '.' . $question->answers[0]->id))
+            <div class="alert alert-danger alert-message">
+                {{ $errors->first('answer.' . $question->id . '.' . $question->answers[0]->id) }}
+            </div>
+        @endif
     </div>
 @endforeach

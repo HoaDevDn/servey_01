@@ -33,7 +33,7 @@
                         <div class="container-infor">
                             {!! Html::image(config('settings.image_system') . 'date.png', '') !!}
                             {!! Form::text('deadline', $survey->deadline, [
-                                'placeholder' => trans('info.duration'),
+                                'placeholder' => $survey->deadline ?: trans('info.duration'),
                                 'id' => 'deadline',
                                 'class' => 'frm-deadline datetimepicker form-control',
                             ]) !!}
