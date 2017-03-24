@@ -20,7 +20,7 @@ class CreateUpdateUsersTable extends Migration
             $table->string('address');
             $table->string('image');
             $table->boolean('status');
-            $table->boolean('level');
+            $table->integer('level');
         });
     }
 
