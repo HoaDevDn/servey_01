@@ -220,23 +220,23 @@
   'database' => 
   array (
     'fetch' => 5,
-    'default' => 'mysql',
+    'default' => 'pgsql',
     'connections' => 
     array (
       'sqlite' => 
       array (
         'driver' => 'sqlite',
-        'database' => 'survey_03',
+        'database' => 'dooh6i98ru0to',
         'prefix' => '',
       ),
       'mysql' => 
       array (
         'driver' => 'mysql',
-        'host' => '127.0.0.1',
-        'port' => '3306',
-        'database' => 'survey_03',
-        'username' => 'root',
-        'password' => '',
+        'host' => 'ec2-54-243-252-91.compute-1.amazonaws.com',
+        'port' => '5432',
+        'database' => 'dooh6i98ru0to',
+        'username' => 'jwgsqbbemjjadu',
+        'password' => 'd7778efa0c9d2968e656ee2dcc81d9ef6ae0f7e13336cc2b005ab014952713d0',
         'charset' => 'utf8',
         'collation' => 'utf8_unicode_ci',
         'prefix' => '',
@@ -246,11 +246,11 @@
       'pgsql' => 
       array (
         'driver' => 'pgsql',
-        'host' => '127.0.0.1',
-        'port' => '3306',
-        'database' => 'survey_03',
-        'username' => 'root',
-        'password' => '',
+        'host' => 'ec2-54-243-252-91.compute-1.amazonaws.com',
+        'port' => '5432',
+        'database' => 'dooh6i98ru0to',
+        'username' => 'jwgsqbbemjjadu',
+        'password' => 'd7778efa0c9d2968e656ee2dcc81d9ef6ae0f7e13336cc2b005ab014952713d0',
         'charset' => 'utf8',
         'prefix' => '',
         'schema' => 'public',
@@ -315,7 +315,7 @@
   ),
   'queue' => 
   array (
-    'default' => 'sync',
+    'default' => 'database',
     'connections' => 
     array (
       'sync' => 
@@ -355,7 +355,7 @@
     ),
     'failed' => 
     array (
-      'database' => 'mysql',
+      'database' => 'pgsql',
       'table' => 'failed_jobs',
     ),
   ),
@@ -384,9 +384,9 @@
     ),
     'google' => 
     array (
-      'client_id' => '1045007326332-24d5ioob9a7q8m6bhajatfaifia1tv3b.apps.googleusercontent.com',
-      'client_secret' => 'MCSyuOTDxGpScErJngCtq3QW',
-      'redirect' => 'http://localhost:8000/callback/google',
+      'client_id' => '719780361114-6vj196d3r3quht60b8hnkj7tage8ac17.apps.googleusercontent.com',
+      'client_secret' => 'C1Xzvx4eYnRiskKxB7_AYrRs',
+      'redirect' => 'http://obscure-depths-16614.herokuapp.com/callback/google',
     ),
   ),
   'session' => 
