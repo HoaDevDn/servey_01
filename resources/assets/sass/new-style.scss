@@ -1210,7 +1210,8 @@ $darkenColor: darken($activeColor, 20%);
         position: absolute;
         right: 0;
         bottom: -229px;
-        z-index: -1px;
+        max-width: 100%;
+        z-index: -1;
     }
 }
 
@@ -2063,6 +2064,10 @@ input.frm-date-2,input.frm-time {
     border-radius: 3px;
     font-size: 11px;
     font-weight: bold;
+
+    &:hover {
+        background: #2053b9;
+    }
 }
 
 .btn-copy-link-complete {
