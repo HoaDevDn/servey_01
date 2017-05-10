@@ -1210,7 +1210,8 @@ $darkenColor: darken($activeColor, 20%);
         position: absolute;
         right: 0;
         bottom: -229px;
-        z-index: -1px;
+        max-width: 100%;
+        z-index: -1;
     }
 }
 
@@ -2035,7 +2036,7 @@ input.frm-date-2,input.frm-time {
 }
 
 .add_bottom_30 {
-    h3,p {
+    h3, p {
         color: white;
     }
 }

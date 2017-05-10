@@ -10,9 +10,7 @@
     <div class="col-md-4 col-sm-4 add_bottom_30 box">
         <p>{!! Html::image(config('settings.image_path_system') . 'icon-1.png', '') !!}</p>
         <h3>{{ trans('view.body.intro.fully_responsive') }}</h3>
-        <p>
-            {{ trans('view.body.intro.content_fully_responsive') }}
-        </p>
+        <p>{{ trans('view.body.intro.content_fully_responsive') }}</p>
     </div>
     <div class="col-md-4 col-sm-4 add_bottom_30 box">
         <p>{!! Html::image(config('settings.image_path_system') . 'icon-2.png', '') !!}</p>
